@@ -6,13 +6,13 @@ import 'package:http/http.dart' as http;
 
 
 class WeatherDataModel extends ChangeNotifier {
-  final Set<String> locations = Set();
+  final Set<String> locations = Set.from(['wetterwolke']);
   final List<WeatherData> _dataSets = [];
 
   UnmodifiableListView<WeatherData> get dataSets => UnmodifiableListView(_dataSets);
 
   void fetch() {
-    fetchWeatherData(locations).then((response) => readWeatherData(response));
+    fetchWeatherData(locations).then((response) => processWeatherData(response));
   }
 
   void processWeatherData(http.Response response) {

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wetterwolke/weatherdata.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+void main() =>
+    runApp(ChangeNotifierProvider(
+        builder: (context) => WeatherDataModel(), child: MyApp()));
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -18,9 +22,20 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepOrange,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Consumer<WeatherDataModel>(builder: (context, weatherData, child) {
+        return Scaffold(
+            appBar: AppBar(title: Text('Wetter Wolke')), body: Center(
+        child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[Text((weatherData.dataSets.length > 0) ? weatherData.dataSets[0].id : "Press reload")])),
+        floatingActionButton: FloatingActionButton(
+          onPressed: weatherData.fetch,
+          tooltip: 'Wetterdaten aktualisieren',
+          child: Icon(Icons.cloud_download),
+        ),);
+      }),
     );
   }
 }
@@ -96,7 +111,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.display1,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .display1,
             ),
           ],
         ),

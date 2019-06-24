@@ -1,8 +1,50 @@
+import 'dart:collection';
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
-Future<http.Response> fetchWeatherData(String location) {
-  return http.get('https://wettercentral.appspot.com//weatherstation/read?build=786&locations=' + location);
+
+class WeatherDataModel extends ChangeNotifier {
+  final Set<String> locations = Set();
+  final List<WeatherData> _dataSets = [];
+
+  UnmodifiableListView<WeatherData> get dataSets => UnmodifiableListView(_dataSets);
+
+  void fetch() {
+    fetchWeatherData(locations).then((response) => readWeatherData(response));
+  }
+
+  void processWeatherData(http.Response response) {
+    List<WeatherData> receivedLocations = readWeatherData(response);
+    if (receivedLocations.length > 0) {
+      _dataSets.clear();
+      _dataSets.addAll(receivedLocations);
+      notifyListeners();
+    }
+  }
+
 }
+
+readWeatherData(http.Response response) {
+  List<WeatherData> parsedWeatherData = [];
+
+  List json = jsonDecode(response.body);
+  json.forEach((j) => parsedWeatherData.add(WeatherData.fromJson(j)));
+
+  return parsedWeatherData;
+}
+
+Future<http.Response> fetchWeatherData(Set<String> locations) {
+  return http.get('https://wettercentral.appspot.com//weatherstation/read?build=786&locations=' + setToString(locations, ','));
+}
+
+String setToString(Set<String> set, String separator) {
+  var str = "";
+  set.forEach((item) => str += item + separator);
+  return str.substring(0, str.length -1);
+}
+
 
 class WeatherData {
   final String id;

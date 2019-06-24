@@ -50,15 +50,45 @@ void main() {
   });
 
   test('fetch weatherdata from wettercentral', () {
-    var future = fetchWeatherData('wetterwolke');
+    Set<String> singleLocation = Set();
+    singleLocation.add('wetterwolke');
+    var future = fetchWeatherData(singleLocation);
     expect(true, future != null);
     future.then(expectAsync1((Response response) {
       expect(200, response.statusCode);
-      var weatherMap = jsonDecode(response.body);
-      var weatherData = WeatherData.fromJson(weatherMap[0]);
-      expect("wetterwolke", weatherData.id);
-      expect("PB2", weatherData.location_short);
-    })).catchError((error) => checkError(error));
+      var weatherData = readWeatherData(response);
+      expect("wetterwolke", weatherData[0].id);
+      expect("PB2", weatherData[0].location_short);
+    }));
+  });
+
+  test('fetch weatherdata from multiple locations', () {
+    Set<String> multipleLocations = Set.from([
+      'wetterwolke',
+      'tegelweg8',
+      'bali',
+      'forstweg17',
+      'ochsengasse',
+      'leoxity'
+    ]);
+    var future = fetchWeatherData(multipleLocations);
+    expect(true, future != null);
+    future.then(expectAsync1((Response response) {
+      expect(200, response.statusCode);
+      List<WeatherData> weatherData = readWeatherData(response);
+      expect(6, weatherData.length);
+      expect("wetterwolke", weatherData[0].id);
+      expect("PB2", weatherData[0].location_short);
+      expect("Leo", weatherData[5].location_short);
+    }));
+  });
+
+  test('Set to String', () {
+    Set<String> strings = Set();
+    strings.add('hallo');
+    strings.add('Du');
+    strings.add('da');
+    expect('hallo,Du,da', setToString(strings, ","));
   });
 }
 

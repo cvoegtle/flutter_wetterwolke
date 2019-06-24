@@ -1,3 +1,9 @@
+import 'package:http/http.dart' as http;
+
+Future<http.Response> fetchWeatherData(String location) {
+  return http.get('https://wettercentral.appspot.com//weatherstation/read?build=786&locations=' + location);
+}
+
 class WeatherData {
   final String id;
   final String timestamp;

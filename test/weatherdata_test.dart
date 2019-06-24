@@ -9,6 +9,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_wetterwolke/weatherdata.dart';
+import 'package:http/src/response.dart';
 
 void main() {
   test('weatherdata serialisation', () {
@@ -36,12 +37,35 @@ void main() {
   });
 
   test('weatherdata deserialisation', () {
-    var weatherDataAsString = '{"localtime":"16:38","UV":2,"latitude":51.723717,"barometer":1018.558,"raining":false,"forecast":"http://wetterstationen.meteomedia.de/?station=104300&wahl=vorhersage","solarradiation":98,"location_short":"PB2","temperature":29.9,"humidity":43,"location":"Paderborn 2.0","id":"wetterwolke","timestamp":"Mon Jun 24 14:38:00 UTC 2019","wind":3.2,"longitude":8.756154}';
+    var weatherDataAsString =
+        '{"localtime":"16:38","UV":2,"latitude":51.723717,"barometer":1018.558,"raining":false,"forecast":"http://wetterstationen.meteomedia.de/?station=104300&wahl=vorhersage","solarradiation":98,"location_short":"PB2","temperature":29.9,"humidity":43,"location":"Paderborn 2.0","id":"wetterwolke","timestamp":"Mon Jun 24 14:38:00 UTC 2019","wind":3.2,"longitude":8.756154}';
     var json = jsonDecode(weatherDataAsString);
     var weatherData = WeatherData.fromJson(json);
     expect(51.723717, weatherData.latitude);
     expect('16:38', weatherData.localtime);
-    expect('http://wetterstationen.meteomedia.de/?station=104300&wahl=vorhersage', weatherData.forecast);
+    expect(
+        'http://wetterstationen.meteomedia.de/?station=104300&wahl=vorhersage',
+        weatherData.forecast);
     expect(1018.558, weatherData.barometer);
   });
+
+  test('fetch weatherdata from wettercentral', () {
+    var future = fetchWeatherData('wetterwolke');
+    expect(true, future != null);
+    future.then(expectAsync1((Response response) {
+      expect(200, response.statusCode);
+      var weatherMap = jsonDecode(response.body);
+      var weatherData = WeatherData.fromJson(weatherMap[0]);
+      expect("wetterwolke", weatherData.id);
+      expect("PB2", weatherData.location_short);
+    })).catchError((error) => checkError(error));
+  });
+}
+
+checkResponse(Response response) {
+  print("Status Code: ${response.statusCode}\nbody: ${response.body}");
+}
+
+checkError(error) {
+  print(error);
 }

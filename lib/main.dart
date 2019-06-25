@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wetterwolke/weatherdata.dart';
+import 'package:flutter_wetterwolke/weatherwidget.dart';
 import 'package:provider/provider.dart';
 
-void main() =>
-    runApp(ChangeNotifierProvider(
-        builder: (context) => WeatherDataModel(), child: MyApp()));
+void main() {
+  var model = WeatherDataModel();
+  model.fetch();
+  runApp(ChangeNotifierProvider(
+      builder: (context) => model, child: MyApp()));
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -27,9 +31,7 @@ class MyApp extends StatelessWidget {
       home: Consumer<WeatherDataModel>(builder: (context, weatherData, child) {
         return Scaffold(
             appBar: AppBar(title: Text('Wetter Wolke')), body: Center(
-        child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[Text((weatherData.dataSets.length > 0) ? weatherData.dataSets[0].id : "Press reload")])),
+        child: WeatherList(weatherData.dataSets)),
         floatingActionButton: FloatingActionButton(
           onPressed: weatherData.fetch,
           tooltip: 'Wetterdaten aktualisieren',

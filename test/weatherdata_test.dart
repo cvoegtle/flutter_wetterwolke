@@ -58,7 +58,7 @@ void main() {
       expect(200, response.statusCode);
       var weatherData = readWeatherData(response);
       expect("wetterwolke", weatherData[0].id);
-      expect("PB2", weatherData[0].location_short);
+      expect("PB2", weatherData[0].locationShort);
     }));
   });
 
@@ -78,8 +78,8 @@ void main() {
       List<WeatherData> weatherData = readWeatherData(response);
       expect(6, weatherData.length);
       expect("wetterwolke", weatherData[0].id);
-      expect("PB2", weatherData[0].location_short);
-      expect("Leo", weatherData[5].location_short);
+      expect("PB2", weatherData[0].locationShort);
+      expect("Leo", weatherData[5].locationShort);
     }));
   });
 

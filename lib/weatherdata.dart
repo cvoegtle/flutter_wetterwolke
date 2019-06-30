@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 
 class WeatherDataModel extends ChangeNotifier {
-  final Set<String> locations = Set.from(['wetterwolke', 'tegelweg8', 'bali', 'leoxity', 'elb', 'herzo','ochsengasse', 'shenzhen']);
+  final Set<String> locations = Set.from(['wetterwolke', 'tegelweg8', 'instant', 'bali', 'leoxity', 'elb', 'herzo','ochsengasse', 'shenzhen']);
   final List<WeatherData> _dataSets = [];
 
   UnmodifiableListView<WeatherData> get dataSets => UnmodifiableListView(_dataSets);
@@ -51,7 +51,7 @@ class WeatherData {
   final String timestamp;
   final String localtime;
   final String location;
-  final String location_short;
+  final String locationShort;
   final num latitude;
   final num longitude;
   final num temperature;
@@ -60,7 +60,7 @@ class WeatherData {
   final int solarradiation;
   final num UV;
   final num rain;
-  final num rain_today;
+  final num rainToday;
   final bool raining;
   final String forecast;
 
@@ -69,7 +69,7 @@ class WeatherData {
       this.timestamp,
       this.localtime,
       this.location,
-      this.location_short,
+      this.locationShort,
       this.latitude,
       this.longitude,
       this.temperature,
@@ -78,7 +78,7 @@ class WeatherData {
       this.solarradiation,
       this.UV,
       this.rain,
-      this.rain_today,
+      this.rainToday,
       this.raining,
       this.forecast);
 
@@ -87,7 +87,7 @@ class WeatherData {
         timestamp = json['timestamp'],
         localtime = json['localtime'],
         location = json['location'],
-        location_short = json['location_short'],
+        locationShort = json['location_short'],
         latitude = json['latitude'],
         longitude = json['longitude'],
         temperature = json['temperature'],
@@ -96,7 +96,7 @@ class WeatherData {
         solarradiation = json['solarradiation'],
         UV = json['UV'],
         rain = json['rain'],
-        rain_today = json['rain_today'],
+        rainToday = json['rain_today'],
         raining = json['raining'],
         forecast = json['forecast'];
 
@@ -106,7 +106,7 @@ class WeatherData {
         'timestamp': timestamp,
         'localtime': localtime,
         'location': location,
-        'location_short': location_short,
+        'location_short': locationShort,
         'latitude': latitude,
         'longitude': longitude,
         'temperature': temperature,
@@ -115,7 +115,7 @@ class WeatherData {
         'solarradiation': solarradiation,
         'UV': UV,
         'rain': rain,
-        'rain_today': rain_today,
+        'rain_today': rainToday,
         'raining': raining,
         'forecast': forecast,
       };

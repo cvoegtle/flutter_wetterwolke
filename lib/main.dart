@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wetterwolke/weatherdata.dart';
 import 'package:flutter_wetterwolke/weatherwidget.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  Intl.defaultLocale = 'de_DE';
+
   var model = WeatherDataModel();
   model.fetch();
   runApp(ChangeNotifierProvider(

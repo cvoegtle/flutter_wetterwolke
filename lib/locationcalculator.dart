@@ -1,11 +1,11 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter_wetterwolke/weatherdata.dart';
 import 'package:location/location.dart';
 import 'package:vector_math/vector_math.dart';
 
-class LocationModel extends ChangeNotifier {
-  LocationData currentLocation;
+class LocationProvider {
+  Position currentPosition;
   var location = new Location();
 
   void fetch() {
@@ -18,8 +18,18 @@ class LocationModel extends ChangeNotifier {
   }
 
   updateLocation(LocationData newLocation) {
-    currentLocation = newLocation;
-    notifyListeners();
+    if (newLocation != null) {
+      currentPosition = Position(newLocation.latitude, newLocation.longitude);
+    }
+  }
+
+  void calculateDistances(List<WeatherData> receivedLocations) {
+    if (currentPosition != null) {
+      for (WeatherData weatherData in receivedLocations) {
+        weatherData.distance = currentPosition.distanceTo(
+            Position(weatherData.latitude, weatherData.longitude));
+      }
+    }
   }
 
 }

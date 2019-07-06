@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_wetterwolke/locationcalculator.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -10,14 +11,17 @@ class WeatherDataModel extends ChangeNotifier {
   final List<WeatherData> _dataSets = [];
 
   UnmodifiableListView<WeatherData> get dataSets => UnmodifiableListView(_dataSets);
+  LocationProvider locationProvider = LocationProvider();
 
   void fetch() {
+    locationProvider.fetch();
     fetchWeatherData(locations).then((response) => processWeatherData(response));
   }
 
   void processWeatherData(http.Response response) {
     List<WeatherData> receivedLocations = readWeatherData(response);
     if (receivedLocations.length > 0) {
+      locationProvider.calculateDistances(receivedLocations);
       _dataSets.clear();
       _dataSets.addAll(receivedLocations);
       notifyListeners();
@@ -63,6 +67,7 @@ class WeatherData {
   final num rainToday;
   final bool raining;
   final String forecast;
+  double distance;
 
   WeatherData(
       this.id,

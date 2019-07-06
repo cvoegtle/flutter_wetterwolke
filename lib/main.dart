@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wetterwolke/locationcalculator.dart';
 import 'package:flutter_wetterwolke/weatherdata.dart';
 import 'package:flutter_wetterwolke/weatherwidget.dart';
 import 'package:intl/intl.dart';
@@ -11,19 +10,17 @@ void main() {
   var weatherModel = WeatherDataModel();
   weatherModel.fetch();
 
-  var locationModel = LocationModel();
-  locationModel.fetch();
-
   runApp(ChangeNotifierProvider(
-      builder: (context) => weatherModel, child: MyApp()));
+      builder: (context) => weatherModel, child: WetterApp()));
 }
 
-class MyApp extends StatelessWidget {
+class WetterApp extends StatelessWidget {
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Wetter Wolke',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -41,13 +38,15 @@ class MyApp extends StatelessWidget {
             appBar: AppBar(title: Text('Wetter Wolke')), body: Center(
         child: WeatherList(weatherData.dataSets)),
         floatingActionButton: FloatingActionButton(
-          onPressed: weatherData.fetch,
+          onPressed: fetch(weatherData),
           tooltip: 'Wetterdaten aktualisieren',
           child: Icon(Icons.cloud_download),
         ),);
       }),
     );
   }
+
+  Function fetch(WeatherDataModel weatherData) => weatherData.fetch;
 }
 
 class MyHomePage extends StatefulWidget {

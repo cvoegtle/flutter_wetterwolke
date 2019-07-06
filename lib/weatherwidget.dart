@@ -50,9 +50,17 @@ class WeatherTitle extends StatelessWidget {
         color: Colors.orange,
         padding: EdgeInsets.only(left: 8.0, top: 4, bottom: 4, right: 8),
         child: Text(
-          "${weatherData.location} - ${weatherData.localtime}",
+          "${weatherData.location} - ${weatherData.localtime} ${distance()}km",
           style: TextStyle(fontWeight: FontWeight.bold),
         ));
+  }
+
+  String distance() {
+    if (weatherData.distance == null) {
+      return "";
+    }
+    NumberFormat formatter = NumberFormat("#,###.#");
+    return " - ${formatter.format(weatherData.distance)}";
   }
 }
 

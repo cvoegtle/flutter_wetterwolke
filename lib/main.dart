@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wetterwolke/locationcalculator.dart';
 import 'package:flutter_wetterwolke/weatherdata.dart';
 import 'package:flutter_wetterwolke/weatherwidget.dart';
 import 'package:intl/intl.dart';
@@ -7,10 +8,14 @@ import 'package:provider/provider.dart';
 void main() {
   Intl.defaultLocale = 'de_DE';
 
-  var model = WeatherDataModel();
-  model.fetch();
+  var weatherModel = WeatherDataModel();
+  weatherModel.fetch();
+
+  var locationModel = LocationModel();
+  locationModel.fetch();
+
   runApp(ChangeNotifierProvider(
-      builder: (context) => model, child: MyApp()));
+      builder: (context) => weatherModel, child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

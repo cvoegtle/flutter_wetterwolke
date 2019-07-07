@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wetterwolke/detailswidget.dart';
+import 'package:flutter_wetterwolke/formatter.dart';
 import 'package:flutter_wetterwolke/weatherdata.dart';
 import 'package:intl/intl.dart';
 
@@ -34,6 +36,10 @@ class WeatherWidget extends StatelessWidget {
     return ListTile(
       title: WeatherTitle(this.weatherData),
       subtitle: WeatherDetails(this.weatherData),
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => WeatherDetailspage(this.weatherData)));
+      },
     );
   }
 }
@@ -50,17 +56,13 @@ class WeatherTitle extends StatelessWidget {
         color: Colors.orange,
         padding: EdgeInsets.only(left: 8.0, top: 4, bottom: 4, right: 8),
         child: Text(
-          "${weatherData.location} - ${weatherData.localtime} ${distance()}km",
+          "${weatherData.location} - ${weatherData.localtime} ${distance()}",
           style: TextStyle(fontWeight: FontWeight.bold),
         ));
   }
 
   String distance() {
-    if (weatherData.distance == null) {
-      return "";
-    }
-    NumberFormat formatter = NumberFormat("#,###.#");
-    return " - ${formatter.format(weatherData.distance)}";
+    return format(weatherData.distance, postfix: "km", prefix: " - ");
   }
 }
 

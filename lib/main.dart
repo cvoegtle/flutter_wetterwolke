@@ -11,10 +11,10 @@ void main() {
   weatherModel.fetch();
 
   runApp(ChangeNotifierProvider(
-      builder: (context) => weatherModel, child: WetterApp()));
+      builder: (context) => weatherModel, child: WetterStartpage()));
 }
 
-class WetterApp extends StatelessWidget {
+class WetterStartpage extends StatelessWidget {
 
   // This widget is the root of your application.
   @override

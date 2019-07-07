@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_wetterwolke/backend.dart';
 import 'package:flutter_wetterwolke/locationcalculator.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,7 +16,7 @@ class WeatherDataModel extends ChangeNotifier {
 
   void fetch() {
     locationProvider.fetch();
-    fetchWeatherData(locations).then((response) => processWeatherData(response));
+    fetchData(locations).then((response) => processWeatherData(response));
   }
 
   void processWeatherData(http.Response response) {
@@ -38,17 +39,6 @@ readWeatherData(http.Response response) {
 
   return parsedWeatherData;
 }
-
-Future<http.Response> fetchWeatherData(Set<String> locations) {
-  return http.get('https://wettercentral.appspot.com//weatherstation/read?build=786&locations=' + setToString(locations, ','));
-}
-
-String setToString(Set<String> set, String separator) {
-  var str = "";
-  set.forEach((item) => str += item + separator);
-  return str.substring(0, str.length -1);
-}
-
 
 class WeatherData {
   final String id;

@@ -8,6 +8,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_wetterwolke/backend.dart';
 import 'package:flutter_wetterwolke/weatherdata.dart';
 import 'package:http/src/response.dart';
 
@@ -52,7 +53,7 @@ void main() {
   test('fetch weatherdata from wettercentral', () {
     Set<String> singleLocation = Set();
     singleLocation.add('wetterwolke');
-    var future = fetchWeatherData(singleLocation);
+    var future = fetchData(singleLocation);
     expect(true, future != null);
     future.then(expectAsync1((Response response) {
       expect(200, response.statusCode);
@@ -71,7 +72,7 @@ void main() {
       'ochsengasse',
       'leoxity'
     ]);
-    var future = fetchWeatherData(multipleLocations);
+    var future = fetchData(multipleLocations);
     expect(true, future != null);
     future.then(expectAsync1((Response response) {
       expect(200, response.statusCode);

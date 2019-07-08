@@ -6,7 +6,15 @@ class Statistics {
 
   Statistics.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        range = [];
+        range = convertRangeFromJson(json['stats']);
+}
+
+List<StatisticsSet> convertRangeFromJson(List<dynamic> jsonSets) {
+  List<StatisticsSet> range = [];
+  for (var json in jsonSets) {
+    range.add(StatisticsSet.fromJson(json));
+  }
+  return range;
 }
 
 class StatisticsSet {

@@ -28,6 +28,7 @@ dependencies:
   intl: ^0.15.8
   location: ^2.3.5
   vector_math: ^2.0.8
+  shared_preferences: ^0.5.3
 
 dev_dependencies:
   flutter_test:

@@ -65,7 +65,6 @@ void main() {
 
   test('fetch weatherdata from multiple locations', () {
     Set<String> multipleLocations = Set.from([
-      'wetterwolke',
       'tegelweg8',
       'bali',
       'forstweg17',
@@ -77,10 +76,10 @@ void main() {
     future.then(expectAsync1((Response response) {
       expect(200, response.statusCode);
       List<WeatherData> weatherData = readWeatherData(response);
-      expect(6, weatherData.length);
-      expect("wetterwolke", weatherData[0].id);
-      expect("PB2", weatherData[0].locationShort);
-      expect("Leo", weatherData[5].locationShort);
+      expect(5, weatherData.length);
+      expect("tegelweg8", weatherData[0].id);
+      expect("PB", weatherData[0].locationShort);
+      expect("Leo", weatherData[4].locationShort);
     }));
   });
 

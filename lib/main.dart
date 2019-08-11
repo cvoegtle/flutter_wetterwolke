@@ -4,6 +4,8 @@ import 'package:flutter_wetterwolke/weatherwidget.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import 'navigationbar.dart';
+
 void main() {
   Intl.defaultLocale = 'de_DE';
 
@@ -15,7 +17,6 @@ void main() {
 }
 
 class WetterStartpage extends StatelessWidget {
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -35,18 +36,21 @@ class WetterStartpage extends StatelessWidget {
       ),
       home: Consumer<WeatherDataModel>(builder: (context, weatherData, child) {
         return Scaffold(
-            appBar: AppBar(title: Text('Wetter Wolke')), body: Center(
-        child: WeatherList(weatherData.dataSets)),
-        floatingActionButton: FloatingActionButton(
-          onPressed: fetch(weatherData),
-          tooltip: 'Wetterdaten aktualisieren',
-          child: Icon(Icons.cloud_download),
-        ),);
+          appBar: AppBar(title: Text('Wetter Wolke')),
+          bottomNavigationBar: NavigationBar(weatherData),
+          body: Center(child: WeatherList(weatherData.dataSets)),
+          floatingActionButton: FloatingActionButton(
+            onPressed: fetch(weatherData),
+            tooltip: 'Wetterdaten aktualisieren',
+            child: Icon(Icons.cloud_download),
+          ),
+        );
       }),
     );
   }
 
   Function fetch(WeatherDataModel weatherData) => weatherData.fetch;
+
 }
 
 class MyHomePage extends StatefulWidget {
@@ -120,10 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .display1,
+              style: Theme.of(context).textTheme.display1,
             ),
           ],
         ),

@@ -1,4 +1,6 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_wetterwolke/configuration.dart';
 import 'package:flutter_wetterwolke/detailswidget.dart';
 import 'package:flutter_wetterwolke/formatter.dart';
 import 'package:flutter_wetterwolke/weatherdata.dart';
@@ -6,8 +8,9 @@ import 'package:intl/intl.dart';
 
 class WeatherList extends StatelessWidget {
   final List<WeatherData> dataSets;
+  final List<LocationConfiguration> locations;
 
-  const WeatherList(this.dataSets);
+  const WeatherList(this.dataSets, this.locations);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,9 @@ class WeatherList extends StatelessWidget {
         if (i.isOdd) return Divider();
         int index = i ~/ 2;
         if (index < dataSets.length) {
-          return WeatherWidget(dataSets[index]);
+          var dataSet = dataSets[index];
+          return WeatherWidget(
+              dataSet, configurationByLocation(locations, dataSet.id));
         } else {
           return null;
         }
@@ -28,8 +33,9 @@ class WeatherList extends StatelessWidget {
 
 class WeatherWidget extends StatelessWidget {
   final WeatherData weatherData;
+  final LocationConfiguration location;
 
-  const WeatherWidget(this.weatherData);
+  const WeatherWidget(this.weatherData, this.location);
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +43,11 @@ class WeatherWidget extends StatelessWidget {
       title: WeatherTitle(this.weatherData),
       subtitle: WeatherDetails(this.weatherData),
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => WeatherDetailspage(this.weatherData)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    WeatherDetailspage(this.weatherData, location)));
       },
     );
   }
@@ -68,8 +77,9 @@ class WeatherTitle extends StatelessWidget {
 
 class WeatherDetails extends StatelessWidget {
   final WeatherData weatherData;
+  final LocationConfiguration location;
 
-  const WeatherDetails(this.weatherData);
+  const WeatherDetails(this.weatherData, [this.location]);
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +109,16 @@ class WeatherDetails extends StatelessWidget {
     if (weatherData.rainToday != null) {
       rows.add(
           Text("Regen heute: ${formatter.format(weatherData.rainToday)}l/m²"));
+    }
+
+    if (location != null) {
+      rows.add(Container(padding: EdgeInsets.only(top: 20.0),
+          child: CarouselSlider(
+        viewportFraction: 1.0,
+        items: location.diagrams
+            .map((diagram) => Image.network(diagram.url))
+            .toList(),
+      )));
     }
 
     return Container(

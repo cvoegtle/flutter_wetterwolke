@@ -5,22 +5,20 @@ Configuration readConfiguration(String jsonString) {
   return Configuration.fromJson(json);
 }
 
-
 class Configuration {
   final List<DiagramConfiguration> diagramsOverall;
   final List<LocationConfiguration> locations;
 
   Configuration(this.diagramsOverall, this.locations);
-  
-  Configuration.fromJson(Map<String, dynamic> json) 
-  : diagramsOverall = fromJsonDiagrams(json['diagrams']),
-  locations = fromJsonLocations(json['locations']);
-  
-  Map<String, dynamic> toJson() => {
-    'diagrams': toJsonDiagrams(diagramsOverall),
-    'locations': toJsonLocations(locations)
-  };
 
+  Configuration.fromJson(Map<String, dynamic> json)
+      : diagramsOverall = fromJsonDiagrams(json['diagrams']),
+        locations = fromJsonLocations(json['locations']);
+
+  Map<String, dynamic> toJson() => {
+        'diagrams': toJsonDiagrams(diagramsOverall),
+        'locations': toJsonLocations(locations)
+      };
 }
 
 class DiagramConfiguration {
@@ -46,9 +44,9 @@ class LocationConfiguration {
 
   LocationConfiguration(this.location, this.city, this.cityShortcut,
       this.weatherForecast, this.windRelevant, this.diagrams);
-  
-  LocationConfiguration.fromJson(Map<String, dynamic> json) :
-        location = json['location'],
+
+  LocationConfiguration.fromJson(Map<String, dynamic> json)
+      : location = json['location'],
         city = json['city'],
         cityShortcut = json['cityShortcut'],
         weatherForecast = json['weatherForecast'],
@@ -56,13 +54,13 @@ class LocationConfiguration {
         diagrams = fromJsonDiagrams(json['diagrams']);
 
   Map<String, dynamic> toJson() => {
-    'location': location,
-    'city': city,
-    'cityShortcut': cityShortcut,
-    'weatherForecast': weatherForecast,
-    'windRelevant': windRelevant,
-    'diagrams': toJsonDiagrams(diagrams)
-  };
+        'location': location,
+        'city': city,
+        'cityShortcut': cityShortcut,
+        'weatherForecast': weatherForecast,
+        'windRelevant': windRelevant,
+        'diagrams': toJsonDiagrams(diagrams)
+      };
 }
 
 List<dynamic> toJsonDiagrams(List<DiagramConfiguration> diagrams) {
@@ -89,3 +87,9 @@ fromJsonLocations(List<dynamic> json) {
   return locations;
 }
 
+LocationConfiguration configurationByLocation(
+    List<LocationConfiguration> locations, String location) {
+  LocationConfiguration foundLocation = null;
+  locations.forEach((l) { if (l.location == location) foundLocation = l;});
+  return foundLocation;
+}

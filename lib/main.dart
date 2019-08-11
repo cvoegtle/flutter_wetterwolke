@@ -38,7 +38,7 @@ class WetterStartpage extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(title: Text('Wetter Wolke')),
           bottomNavigationBar: NavigationBar(weatherData),
-          body: Center(child: WeatherList(weatherData.dataSets)),
+          body: Center(child: WeatherList(weatherData.dataSets, weatherData.configuration.locations)),
           floatingActionButton: FloatingActionButton(
             onPressed: fetch(weatherData),
             tooltip: 'Wetterdaten aktualisieren',

@@ -8,7 +8,7 @@ void main() {
   Intl.defaultLocale = 'de_DE';
 
   var weatherModel = WeatherDataModel();
-  weatherModel.fetch();
+  weatherModel.init();
 
   runApp(ChangeNotifierProvider(
       builder: (context) => weatherModel, child: WetterStartpage()));

@@ -2,17 +2,27 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_wetterwolke/backend.dart';
+import 'package:flutter_wetterwolke/configuration.dart';
 import 'package:flutter_wetterwolke/locationcalculator.dart';
 import 'package:http/http.dart' as http;
 
-
 class WeatherDataModel extends ChangeNotifier {
-  final Set<String> locations = Set.from(['tegelweg8', 'instant', 'bali', 'leoxity', 'elb', 'herzo','ochsengasse', 'shenzhen']);
+  Set<String> locations = Set();
+  Configuration configuration;
   final List<WeatherData> _dataSets = [];
 
-  UnmodifiableListView<WeatherData> get dataSets => UnmodifiableListView(_dataSets);
+  UnmodifiableListView<WeatherData> get dataSets =>
+      UnmodifiableListView(_dataSets);
   LocationProvider locationProvider = LocationProvider();
+
+  void init() {
+    fetchConfiguration().then((response) {
+      processConfiguration(response);
+      fetch();
+    });
+  }
 
   void fetch() {
     locationProvider.fetch();
@@ -29,6 +39,11 @@ class WeatherDataModel extends ChangeNotifier {
     }
   }
 
+  processConfiguration(http.Response response) {
+    configuration = readConfiguration(response.body);
+    configuration.locations
+        .forEach((location) => locations.add(location.location));
+  }
 }
 
 readWeatherData(http.Response response) {
@@ -95,8 +110,7 @@ class WeatherData {
         raining = json['raining'],
         forecast = json['forecast'];
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         'id': id,
         'timestamp': timestamp,
         'localtime': localtime,

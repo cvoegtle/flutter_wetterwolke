@@ -1,3 +1,11 @@
+import 'dart:convert';
+
+Configuration readConfiguration(String jsonString) {
+  Map<String, dynamic> json = jsonDecode(jsonString);
+  return Configuration.fromJson(json);
+}
+
+
 class Configuration {
   final List<DiagramConfiguration> diagramsOverall;
   final List<LocationConfiguration> locations;

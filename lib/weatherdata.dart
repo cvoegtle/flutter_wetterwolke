@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 
 class WeatherDataModel extends ChangeNotifier {
-  final Set<String> locations = Set.from(['wetterwolke', 'tegelweg8', 'instant', 'bali', 'leoxity', 'elb', 'herzo','ochsengasse', 'shenzhen']);
+  final Set<String> locations = Set.from(['tegelweg8', 'instant', 'bali', 'leoxity', 'elb', 'herzo','ochsengasse', 'shenzhen']);
   final List<WeatherData> _dataSets = [];
 
   UnmodifiableListView<WeatherData> get dataSets => UnmodifiableListView(_dataSets);

@@ -41,6 +41,7 @@ class LocationConfiguration {
   final String weatherForecast;
   final bool windRelevant;
   final List<DiagramConfiguration> diagrams;
+  bool enabled = false;
 
   LocationConfiguration(this.location, this.city, this.cityShortcut,
       this.weatherForecast, this.windRelevant, this.diagrams);

@@ -7,10 +7,11 @@ import 'package:flutter_wetterwolke/backend.dart';
 import 'package:flutter_wetterwolke/configuration.dart';
 import 'package:flutter_wetterwolke/locationcalculator.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WeatherDataModel extends ChangeNotifier {
   Set<String> locations = Set();
-  Configuration configuration;
+  Configuration configuration = Configuration([], []);
   final List<WeatherData> _dataSets = [];
 
   UnmodifiableListView<WeatherData> get dataSets =>
@@ -20,7 +21,6 @@ class WeatherDataModel extends ChangeNotifier {
   void init() {
     fetchConfiguration().then((response) {
       processConfiguration(response);
-      fetch();
     });
   }
 
@@ -40,9 +40,21 @@ class WeatherDataModel extends ChangeNotifier {
   }
 
   processConfiguration(http.Response response) {
-    configuration = readConfiguration(response.body);
-    configuration.locations
-        .forEach((location) => locations.add(location.location));
+    var body = Utf8Decoder().convert(response.bodyBytes);
+    configuration = readConfiguration(body);
+    SharedPreferences.getInstance()
+        .then((prefs) => addLocalConfiguration(prefs));
+  }
+
+  addLocalConfiguration(SharedPreferences prefs) {
+    configuration.locations.forEach((location) {
+      location.enabled = prefs.getBool(location.location) == true;
+      if (location.enabled) {
+        locations.add(location.location);
+      }
+    });
+    
+    fetch();
   }
 }
 

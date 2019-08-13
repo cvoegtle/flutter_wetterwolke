@@ -27,18 +27,21 @@ class NavigationBar extends StatelessWidget {
       ],
     );
   }
+
+  void navigateToDiagrams (BuildContext context, List<DiagramConfiguration> diagrams) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => DiagramViewer("Diagramme", diagrams)));
+  }
+
+  void navigateToConfiguration(BuildContext context, Configuration configuration) async {
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ConfigurationPage(configuration)));
+    weatherData.reinitialize();
+  }
+
 }
 
-void navigateToDiagrams(BuildContext context, List<DiagramConfiguration> diagrams) {
-  Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => DiagramViewer("Diagramme", diagrams)));
-}
-
-void navigateToConfiguration(BuildContext context, Configuration configuration) {
-  Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => ConfigurationPage(configuration)));
-}

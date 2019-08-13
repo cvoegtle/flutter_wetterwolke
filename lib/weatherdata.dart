@@ -56,6 +56,12 @@ class WeatherDataModel extends ChangeNotifier {
     
     fetch();
   }
+
+  void reinitialize() {
+    locations = Set();
+    SharedPreferences.getInstance()
+        .then((prefs) => addLocalConfiguration(prefs));
+  }
 }
 
 readWeatherData(http.Response response) {

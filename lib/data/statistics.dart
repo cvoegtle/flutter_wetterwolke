@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_wetterwolke/data/backend.dart';
+import 'package:flutter_wetterwolke/formatter.dart';
 import 'package:http/src/response.dart' as http;
 
 class StatisticsModel extends ChangeNotifier {
@@ -76,4 +77,29 @@ class StatisticsSet {
         'solarRadiationMax': solarRadiationMax,
         'kwh': kwh
       };
+}
+
+List<String> formatStatisticsSet(StatisticsSet stats) {
+  List<String> formatted = [];
+  formatted.add(mapRange(stats.range));
+  formatted.add(format(stats.rain, postfix: "l"));
+  formatted.add(format(stats.minTemperature, postfix: "°C"));
+  formatted.add(format(stats.maxTemperature, postfix: "°C"));
+  formatted.add(format(stats.kwh, postfix: "kWh"));
+  formatted.add(format(stats.solarRadiationMax, postfix: "W/m²"));
+  return formatted;
+}
+
+String mapRange(String range) {
+  if (range == "today") {
+    return "Heute";
+  } else if (range == "yesterday") {
+    return "Gestern";
+  } else if ( range == "last7days") {
+    return "7 Tage";
+  } else if (range == "last30days") {
+    return "30 Tage";
+  } else {
+    return "";
+  }
 }

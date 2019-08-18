@@ -33,11 +33,13 @@ class WeatherDetailspage extends StatelessWidget {
               DetailsTitle("Aktuelle Messwerte"),
               WeatherDetails(this.weatherData),
               DetailsTitle("Statistik"),
-              Consumer<StatisticsModel>(
+              Container(
+                padding: EdgeInsets.only(left: 8.0),
+              child: Consumer<StatisticsModel>(
                   builder: (context, statisticsModel, child) {
                     return
                       StatisticsViewer(statisticsModel.statistics);
-                  }),
+                  })),
               DetailsTitle("Diagramme"),
               DiagramViewer(location.diagrams)
             ]))

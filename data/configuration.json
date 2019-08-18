@@ -54,6 +54,10 @@
           "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=2&oid=443476029&format=image"
         },
         {
+          "description": "Luftdruck",
+          "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=2&oid=445461471&format=image"
+        },
+        {
           "description": "30 Tage",
           "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=1&oid=183626445&format=image"
         },

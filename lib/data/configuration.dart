@@ -90,7 +90,7 @@ fromJsonLocations(List<dynamic> json) {
 
 LocationConfiguration configurationByLocation(
     List<LocationConfiguration> locations, String location) {
-  LocationConfiguration foundLocation = null;
+  LocationConfiguration foundLocation;
   locations.forEach((l) { if (l.location == location) foundLocation = l;});
   return foundLocation;
 }

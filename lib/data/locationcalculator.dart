@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:flutter_wetterwolke/weatherdata.dart';
+import 'package:flutter_wetterwolke/data/weatherdata.dart';
 import 'package:location/location.dart';
 import 'package:vector_math/vector_math.dart';
 
@@ -36,7 +36,7 @@ class LocationProvider {
 
 
 class Position {
-  double _EARTH_RADIUS = 6371.0; // Approx Earth radius in KM
+  static const double _EARTH_RADIUS = 6371.0; // Approx Earth radius in KM
 
   final double latitude;
   final double longitude;

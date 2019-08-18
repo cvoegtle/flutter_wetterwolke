@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_wetterwolke/configuration.dart';
+import 'package:flutter_wetterwolke/data/configuration.dart';
 
 void main() {
   test('diagram configuration derialisation', () {

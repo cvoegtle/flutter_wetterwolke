@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_wetterwolke/diagramviewer.dart';
-import 'package:flutter_wetterwolke/weatherdata.dart';
+import 'package:flutter_wetterwolke/data/weatherdata.dart';
+import 'package:flutter_wetterwolke/view/diagramviewer.dart';
 
-import 'configuration.dart';
+import '../data/configuration.dart';
 import 'configurationpage.dart';
 
 class NavigationBar extends StatelessWidget {
@@ -32,7 +32,7 @@ class NavigationBar extends StatelessWidget {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => DiagramViewer("Diagramme", diagrams)));
+            builder: (context) => DiagramPage("Diagramme", diagrams)));
   }
 
   void navigateToConfiguration(BuildContext context, Configuration configuration) async {

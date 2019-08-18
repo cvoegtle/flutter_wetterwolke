@@ -8,8 +8,8 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_wetterwolke/backend.dart';
-import 'package:flutter_wetterwolke/weatherdata.dart';
+import 'package:flutter_wetterwolke/data/backend.dart';
+import 'package:flutter_wetterwolke/data/weatherdata.dart';
 import 'package:http/src/response.dart';
 
 void main() {

@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_wetterwolke/backend.dart';
-import 'package:flutter_wetterwolke/configuration.dart';
-import 'package:flutter_wetterwolke/locationcalculator.dart';
+import 'package:flutter_wetterwolke/data/backend.dart';
+import 'package:flutter_wetterwolke/data/configuration.dart';
+import 'package:flutter_wetterwolke/data/locationcalculator.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

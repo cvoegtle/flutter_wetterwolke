@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_wetterwolke/configuration.dart';
+import 'package:flutter_wetterwolke/data/configuration.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfigurationPage extends StatefulWidget {

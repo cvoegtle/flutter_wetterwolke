@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_wetterwolke/locationcalculator.dart';
+import 'package:flutter_wetterwolke/data/locationcalculator.dart';
 
 void main() {
   var bali = Position(51.775263, 8.810188);

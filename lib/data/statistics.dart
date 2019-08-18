@@ -1,3 +1,34 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_wetterwolke/data/backend.dart';
+import 'package:http/src/response.dart' as http;
+
+class StatisticsModel extends ChangeNotifier {
+  final String locationId;
+  Statistics statistics;
+
+  StatisticsModel(this.locationId);
+
+  void fetch() {
+    fetchStats({locationId}).then((response) {
+      processStatistics(response);
+    });
+  }
+
+  void processStatistics(http.Response response) {
+    readStats(response.body);
+  }
+
+  void readStats(String jsonString) {
+    var json = jsonDecode(jsonString);
+    if (json.length > 0) {
+      statistics = Statistics.fromJson(json[0]);
+      notifyListeners();
+    }
+  }
+}
+
 class Statistics {
   final String id;
   final List<StatisticsSet> range;
@@ -36,7 +67,8 @@ class StatisticsSet {
         solarRadiationMax = json["solarRadiationMax"],
         kwh = json["kwh"];
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         'range': range,
         'maxTemperature': maxTemperature,
         'minTemperature': minTemperature,

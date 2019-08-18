@@ -1,9 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_wetterwolke/configuration.dart';
-import 'package:flutter_wetterwolke/detailswidget.dart';
+import 'package:flutter_wetterwolke/data/configuration.dart';
+import 'package:flutter_wetterwolke/data/weatherdata.dart';
 import 'package:flutter_wetterwolke/formatter.dart';
-import 'package:flutter_wetterwolke/weatherdata.dart';
+import 'package:flutter_wetterwolke/view/detailswidget.dart';
 import 'package:intl/intl.dart';
 
 class WeatherList extends StatelessWidget {
@@ -77,9 +76,8 @@ class WeatherTitle extends StatelessWidget {
 
 class WeatherDetails extends StatelessWidget {
   final WeatherData weatherData;
-  final LocationConfiguration location;
 
-  const WeatherDetails(this.weatherData, [this.location]);
+  const WeatherDetails(this.weatherData);
 
   @override
   Widget build(BuildContext context) {
@@ -109,16 +107,6 @@ class WeatherDetails extends StatelessWidget {
     if (weatherData.rainToday != null) {
       rows.add(
           Text("Regen heute: ${formatter.format(weatherData.rainToday)}l/m²"));
-    }
-
-    if (location != null) {
-      rows.add(Container(padding: EdgeInsets.only(top: 20.0),
-          child: CarouselSlider(
-        viewportFraction: 1.0,
-        items: location.diagrams
-            .map((diagram) => Image.network(diagram.url))
-            .toList(),
-      )));
     }
 
     return Container(

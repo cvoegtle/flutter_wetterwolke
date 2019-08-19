@@ -8,6 +8,7 @@ Configuration readConfiguration(String jsonString) {
 class Configuration {
   final List<DiagramConfiguration> diagramsOverall;
   final List<LocationConfiguration> locations;
+  String secret = "";
 
   Configuration(this.diagramsOverall, this.locations);
 

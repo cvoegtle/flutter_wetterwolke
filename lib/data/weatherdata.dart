@@ -53,7 +53,7 @@ class WeatherDataModel extends ChangeNotifier {
         locations.add(location.location);
       }
     });
-    
+    configuration.secret = prefs.getString("secret");
     fetch();
   }
 

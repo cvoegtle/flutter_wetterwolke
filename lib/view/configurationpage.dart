@@ -21,28 +21,60 @@ class ConfigurationState extends State<ConfigurationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('Konfiguration')),
-        body: ListView(children: configuration.locations.map((
-            LocationConfiguration location) {
-          return CheckboxListTile(title: Text(location.city),
-            value: location.enabled,
-            onChanged: (bool state) {
-              setState(() {
-                _setLocationState(location.location, state);
-              });
-            },
-            secondary: const Icon(Icons.location_on),);
-        }).toList(),
+        body: ListView(
+          children: buildConfigurationItems(),
         ));
+  }
+
+  List<Widget> buildConfigurationItems() {
+    List<Widget> configurationItems = [];
+    configurationItems.add(Container(
+        padding: EdgeInsets.only(top: 8, left: 10),
+        child: Text(
+          "Stationen",
+          style: TextStyle(fontSize: 17),
+        )));
+    configurationItems.addAll(buildLocationCheckboxes());
+    configurationItems.add(Divider());
+    var textController = TextEditingController();
+    configurationItems.add(ListTile(
+        title: Text("Geheimnis"),
+        subtitle: TextField(controller: textController,
+          obscureText: true,
+          onChanged: (String secret) {
+            _setSecret(secret);
+          },
+        )));
+    textController.text = configuration.secret;
+    return configurationItems;
+  }
+
+  List<CheckboxListTile> buildLocationCheckboxes() {
+    return configuration.locations.map((LocationConfiguration location) {
+      return CheckboxListTile(
+        title: Text(location.city),
+        value: location.enabled,
+        onChanged: (bool state) {
+          setState(() {
+            _setLocationState(location.location, state);
+          });
+        },
+        secondary: const Icon(Icons.location_on),
+      );
+    }).toList();
   }
 
   _setLocationState(String locationId, bool state) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(locationId, state);
-    var location = configuration.locations.firstWhere((l) =>
-    l.location == locationId);
+    var location =
+        configuration.locations.firstWhere((l) => l.location == locationId);
     location.enabled = state;
   }
 
-
+  _setSecret(String secret) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("secret", secret);
+    configuration.secret = secret;
+  }
 }
-

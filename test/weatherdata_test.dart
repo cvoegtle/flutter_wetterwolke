@@ -52,14 +52,14 @@ void main() {
 
   test('fetch weatherdata from wettercentral', () {
     Set<String> singleLocation = Set();
-    singleLocation.add('wetterwolke');
+    singleLocation.add('tegelweg8');
     var future = fetchData(singleLocation);
     expect(true, future != null);
     future.then(expectAsync1((Response response) {
       expect(200, response.statusCode);
       var weatherData = readWeatherData(response);
-      expect("wetterwolke", weatherData[0].id);
-      expect("PB2", weatherData[0].locationShort);
+      expect("tegelweg8", weatherData[0].id);
+      expect("PB", weatherData[0].locationShort);
     }));
   });
 

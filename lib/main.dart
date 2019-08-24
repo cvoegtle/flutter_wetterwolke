@@ -39,11 +39,6 @@ class WetterStartpage extends StatelessWidget {
           appBar: AppBar(title: Text('Wetter Wolke')),
           bottomNavigationBar: NavigationBar(weatherData),
           body: Center(child: WeatherList(weatherData.dataSets, weatherData.configuration.locations)),
-          floatingActionButton: FloatingActionButton(
-            onPressed: fetch(weatherData),
-            tooltip: 'Wetterdaten aktualisieren',
-            child: Icon(Icons.cloud_download),
-          ),
         );
       }),
     );

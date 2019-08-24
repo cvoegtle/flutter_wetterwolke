@@ -13,19 +13,15 @@ class WeatherList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.separated(
       padding: EdgeInsets.only(top: 16, bottom: 16),
-      itemBuilder: (context, i) {
-        if (i.isOdd) return Divider();
-        int index = i ~/ 2;
-        if (index < dataSets.length) {
-          var dataSet = dataSets[index];
-          return WeatherWidget(
-              dataSet, configurationByLocation(locations, dataSet.id));
-        } else {
-          return null;
-        }
+      itemCount: dataSets.length,
+      itemBuilder: (context, index) {
+        var dataSet = dataSets[index];
+        return WeatherWidget(
+            dataSet, configurationByLocation(locations, dataSet.id));
       },
+      separatorBuilder: (context, i) => Divider(),
     );
   }
 }
@@ -76,14 +72,14 @@ class WeatherTitle extends StatelessWidget {
 
 class WeatherDetails extends StatelessWidget {
   final WeatherData weatherData;
+  NumberFormat formatter = NumberFormat("#,###.#");
 
-  const WeatherDetails(this.weatherData);
+  WeatherDetails(this.weatherData);
 
   @override
   Widget build(BuildContext context) {
-    NumberFormat formatter = NumberFormat("#,###.#");
     List<Widget> rows = [
-      Text("Temperatur: ${formatter.format(weatherData.temperature)}°C"),
+      Text(temperatureText()),
       Text("Luftfeuchtigkeit: ${weatherData.humidity}%"),
     ];
 
@@ -115,5 +111,12 @@ class WeatherDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: rows,
         ));
+  }
+
+  String temperatureText() {
+    String insideTemperatureText = weatherData.insideTemperature != null
+        ? " / ${weatherData.insideTemperature}°C"
+        : "";
+    return "Temperatur: ${formatter.format(weatherData.temperature)}°C$insideTemperatureText";
   }
 }

@@ -26,7 +26,8 @@ class WeatherDataModel extends ChangeNotifier {
 
   void fetch() {
     locationProvider.fetch();
-    fetchData(locations).then((response) => processWeatherData(response));
+    fetchData(locations, additional: "&secret=${configuration.secret}")
+        .then((response) => processWeatherData(response));
   }
 
   void processWeatherData(http.Response response) {
@@ -90,6 +91,7 @@ class WeatherData {
   final num rainToday;
   final bool raining;
   final String forecast;
+  num insideTemperature;
   double distance;
 
   WeatherData(
@@ -119,6 +121,7 @@ class WeatherData {
         latitude = json['latitude'],
         longitude = json['longitude'],
         temperature = json['temperature'],
+        insideTemperature = json['inside_temperature'],
         humidity = json['humidity'],
         barometer = json['barometer'],
         solarradiation = json['solarradiation'],
@@ -137,6 +140,7 @@ class WeatherData {
         'latitude': latitude,
         'longitude': longitude,
         'temperature': temperature,
+        'inside_temperature': insideTemperature,
         'humidity': humidity,
         'barometer': barometer,
         'solarradiation': solarradiation,

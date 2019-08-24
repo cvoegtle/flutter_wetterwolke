@@ -80,7 +80,7 @@ class WeatherDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> rows = [
       Text(temperatureText()),
-      Text("Luftfeuchtigkeit: ${weatherData.humidity}%"),
+      Text(humidityText()),
     ];
 
     if (weatherData.barometer != null) {
@@ -113,10 +113,18 @@ class WeatherDetails extends StatelessWidget {
         ));
   }
 
+  String humidityText() {
+    String insideHumidity = optional(weatherData.insideHumidity, "%");
+    return "Luftfeuchtigkeit: ${weatherData.humidity}%$insideHumidity";
+  }
+
   String temperatureText() {
-    String insideTemperatureText = weatherData.insideTemperature != null
-        ? " / ${weatherData.insideTemperature}°C"
-        : "";
+    String insideTemperatureText =
+        optional(weatherData.insideTemperature, "°C");
     return "Temperatur: ${formatter.format(weatherData.temperature)}°C$insideTemperatureText";
+  }
+
+  String optional(num value, String postfix) {
+    return value != null ? " / $value$postfix" : "";
   }
 }

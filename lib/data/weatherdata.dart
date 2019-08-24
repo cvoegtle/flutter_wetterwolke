@@ -92,6 +92,7 @@ class WeatherData {
   final bool raining;
   final String forecast;
   num insideTemperature;
+  num insideHumidity;
   double distance;
 
   WeatherData(
@@ -122,6 +123,7 @@ class WeatherData {
         longitude = json['longitude'],
         temperature = json['temperature'],
         insideTemperature = json['inside_temperature'],
+        insideHumidity = json['inside_humidity'],
         humidity = json['humidity'],
         barometer = json['barometer'],
         solarradiation = json['solarradiation'],
@@ -142,6 +144,7 @@ class WeatherData {
         'temperature': temperature,
         'inside_temperature': insideTemperature,
         'humidity': humidity,
+        'inside_humidity': insideHumidity,
         'barometer': barometer,
         'solarradiation': solarradiation,
         'UV': UV,

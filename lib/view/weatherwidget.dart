@@ -8,14 +8,18 @@ import 'package:intl/intl.dart';
 class WeatherList extends StatelessWidget {
   final List<WeatherData> dataSets;
   final List<LocationConfiguration> locations;
+  WeatherListScrollController _scrollController;
 
-  const WeatherList(this.dataSets, this.locations);
+  WeatherList(this.dataSets, this.locations, {VoidCallback onDrag}) {
+    _scrollController = WeatherListScrollController(onDrag);
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
       padding: EdgeInsets.only(top: 16, bottom: 16),
       itemCount: dataSets.length,
+      controller: _scrollController,
       itemBuilder: (context, index) {
         var dataSet = dataSets[index];
         return WeatherWidget(
@@ -24,6 +28,24 @@ class WeatherList extends StatelessWidget {
       separatorBuilder: (context, i) => Divider(),
     );
   }
+}
+
+class WeatherListScrollController extends ScrollController {
+  DateTime _lastDrag = DateTime.now();
+
+  WeatherListScrollController(VoidCallback onDrag) {
+    addListener(() {
+      DateTime now = DateTime.now();
+      if (position.outOfRange &&
+          offset <= (position.minScrollExtent - 30) &&
+          now.difference(_lastDrag).inSeconds > 3 &&
+          onDrag != null) {
+        onDrag();
+        _lastDrag = now;
+      }
+    }); 
+  }
+  
 }
 
 class WeatherWidget extends StatelessWidget {

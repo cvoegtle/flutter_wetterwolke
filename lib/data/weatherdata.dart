@@ -36,6 +36,7 @@ class WeatherDataModel extends ChangeNotifier {
       locationProvider.calculateDistances(receivedLocations);
       _dataSets.clear();
       _dataSets.addAll(receivedLocations);
+      _dataSets.sort();
       notifyListeners();
     }
   }
@@ -74,7 +75,7 @@ readWeatherData(http.Response response) {
   return parsedWeatherData;
 }
 
-class WeatherData {
+class WeatherData implements Comparable<WeatherData> {
   final String id;
   final String timestamp;
   final String localtime;
@@ -153,4 +154,15 @@ class WeatherData {
         'raining': raining,
         'forecast': forecast,
       };
+
+  @override
+  int compareTo(WeatherData other) {
+    if (distance != null && other.distance != null) {
+      return distance.compareTo(other.distance);
+    } else {
+      return location.compareTo(other.location);
+    }
+  }
+
+
 }

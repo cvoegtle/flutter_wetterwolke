@@ -30,7 +30,7 @@ class WeatherDetailspage extends StatelessWidget {
                 title: Text(
                     '${this.weatherData.location} ${distance()}')),
             body: ListView(children: [
-              DetailsTitle("Aktuelle Messwerte"),
+              DetailsTitle("Messwerte von ${weatherData.localtime}"),
               WeatherDetails(this.weatherData),
               DetailsTitle("Statistik"),
               Container(

@@ -39,6 +39,11 @@ class Statistics {
   Statistics.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         range = convertRangeFromJson(json['stats']);
+  
+  bool containsSolarInformation() {
+    var statisticSetWithSolar = range.firstWhere((statisticSet) => statisticSet.containsSolarInformation(), orElse: () => null);
+    return statisticSetWithSolar != null;
+  }
 }
 
 List<StatisticsSet> convertRangeFromJson(List<dynamic> jsonSets) {
@@ -77,6 +82,11 @@ class StatisticsSet {
         'solarRadiationMax': solarRadiationMax,
         'kwh': kwh
       };
+
+  bool containsSolarInformation() {
+    return solarRadiationMax != null || kwh != null;
+  }
+
 }
 
 List<String> formatStatisticsSet(StatisticsSet stats) {

@@ -1,4 +1,4 @@
-package com.example.flutter_wetterwolke
+package org.voegtle.flutter_wetterwolke
 
 import android.os.Bundle
 

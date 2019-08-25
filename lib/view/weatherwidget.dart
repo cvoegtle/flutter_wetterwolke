@@ -9,13 +9,24 @@ class WeatherList extends StatelessWidget {
   final List<WeatherData> dataSets;
   final List<LocationConfiguration> locations;
   WeatherListScrollController _scrollController;
+  VoidCallback _onReload;
+  BuildContext _context;
 
-  WeatherList(this.dataSets, this.locations, {VoidCallback onDrag}) {
+  WeatherList(this.dataSets, this.locations, {VoidCallback onReload}) {
+    _onReload = onReload;
     _scrollController = WeatherListScrollController(onDrag);
+  }
+  
+  void onDrag() {
+    if (_onReload != null) {
+      Scaffold.of(_context).showSnackBar(SnackBar(content: Text("Wetterdaten werden aktualisiert")));
+      _onReload();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    _context = context;
     return ListView.separated(
       padding: EdgeInsets.only(top: 16, bottom: 16),
       itemCount: dataSets.length,

@@ -34,20 +34,21 @@ class WetterStartpage extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.deepOrange,
       ),
-      home: Consumer<WeatherDataModel>(builder: (context, weatherData, child) {
-        return Scaffold(
+      home: Consumer<WeatherDataModel>(builder: (context, weatherData, child) =>
+        Scaffold(
           appBar: AppBar(title: Text('Wetter Wolke')),
           bottomNavigationBar: NavigationBar(weatherData),
           body: Center(
               child: WeatherList(
             weatherData.dataSets,
             weatherData.configuration.locations,
-            onDrag: () {
+            onReload: () {
               weatherData.fetch();
             },
           )),
-        );
-      }),
+        ),
+      ),
     );
   }
 }
+

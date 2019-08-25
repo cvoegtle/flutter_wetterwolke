@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wetterwolke/data/weatherdata.dart';
 import 'package:flutter_wetterwolke/view/diagramviewer.dart';
+import 'package:flutter_wetterwolke/view/snackbars.dart';
 
 import '../data/configuration.dart';
 import 'configurationpage.dart';
@@ -15,6 +16,11 @@ class NavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ButtonBar(
       children: <Widget>[
+        IconButton(icon: Icon(Icons.cloud_download),
+        onPressed: () {
+          Scaffold.of(context).showSnackBar(UpdateDataSnackBar());
+          this.weatherData.fetch();
+        },),
         IconButton(icon: Icon(Icons.photo_library,),
         onPressed: () {
           navigateToDiagrams(context, weatherData.configuration.diagramsOverall);

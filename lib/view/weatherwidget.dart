@@ -3,6 +3,7 @@ import 'package:flutter_wetterwolke/data/configuration.dart';
 import 'package:flutter_wetterwolke/data/weatherdata.dart';
 import 'package:flutter_wetterwolke/formatter.dart';
 import 'package:flutter_wetterwolke/view/detailswidget.dart';
+import 'package:flutter_wetterwolke/view/snackbars.dart';
 import 'package:intl/intl.dart';
 
 class WeatherList extends StatelessWidget {
@@ -19,14 +20,7 @@ class WeatherList extends StatelessWidget {
 
   void onDrag() {
     if (_onReload != null) {
-      Scaffold.of(_context).showSnackBar(SnackBar(
-          content: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Container(
-          child: Icon(Icons.cloud_download),
-          padding: EdgeInsets.only(right: 10),
-        ),
-        Text("Wetterdaten werden aktualisiert")
-      ])));
+      Scaffold.of(_context).showSnackBar(UpdateDataSnackBar());
       _onReload();
     }
   }

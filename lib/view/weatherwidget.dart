@@ -16,10 +16,17 @@ class WeatherList extends StatelessWidget {
     _onReload = onReload;
     _scrollController = WeatherListScrollController(onDrag);
   }
-  
+
   void onDrag() {
     if (_onReload != null) {
-      Scaffold.of(_context).showSnackBar(SnackBar(content: Text("Wetterdaten werden aktualisiert")));
+      Scaffold.of(_context).showSnackBar(SnackBar(
+          content: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Container(
+          child: Icon(Icons.cloud_download),
+          padding: EdgeInsets.only(right: 10),
+        ),
+        Text("Wetterdaten werden aktualisiert")
+      ])));
       _onReload();
     }
   }
@@ -54,9 +61,8 @@ class WeatherListScrollController extends ScrollController {
         onDrag();
         _lastDrag = now;
       }
-    }); 
+    });
   }
-  
 }
 
 class WeatherWidget extends StatelessWidget {

@@ -121,11 +121,11 @@ class WeatherDetails extends StatelessWidget {
           Text("Luftdruck: ${formatter.format(weatherData.barometer)}hPa"));
     }
 
-    if (weatherData.solarradiation != null) {
+    if (weatherData.solarradiation != null && weatherData.solarradiation != 0) {
       rows.add(Text("Sonneneinstrahlung: ${weatherData.solarradiation}W/m²"));
     }
 
-    if (weatherData.UV != null) {
+    if (weatherData.UV != null && weatherData.UV != 0) {
       rows.add(Text("UV Index: ${formatter.format(weatherData.UV)}"));
     }
 

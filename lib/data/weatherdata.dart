@@ -49,6 +49,7 @@ class WeatherDataModel extends ChangeNotifier {
   }
 
   addLocalConfiguration(SharedPreferences prefs) {
+    ensureInitialConfiguration(prefs, configuration.locations);
     configuration.locations.forEach((location) {
       location.enabled = prefs.getBool(location.location) == true;
       if (location.enabled) {
@@ -56,6 +57,7 @@ class WeatherDataModel extends ChangeNotifier {
       }
     });
     configuration.secret = prefs.getString("secret");
+
     fetch();
   }
 
@@ -63,6 +65,20 @@ class WeatherDataModel extends ChangeNotifier {
     locations = Set();
     SharedPreferences.getInstance()
         .then((prefs) => addLocalConfiguration(prefs));
+  }
+
+  void ensureInitialConfiguration(
+      SharedPreferences prefs, List<LocationConfiguration> locations) {
+    var first = locations.firstWhere(
+        (location) => prefs.getBool(location.location) == true,
+        orElse: () => null);
+    if (first == null) {
+      prefs.setBool("tegelweg8", true);
+      prefs.setBool("ochsengasse", true);
+      prefs.setBool("forstweg17", true);
+      prefs.setBool("herzo", true);
+      prefs.setBool("elb", true);
+    }
   }
 }
 
@@ -163,6 +179,4 @@ class WeatherData implements Comparable<WeatherData> {
       return location.compareTo(other.location);
     }
   }
-
-
 }

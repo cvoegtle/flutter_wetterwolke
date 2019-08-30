@@ -49,7 +49,7 @@ class ConfigurationState extends State<ConfigurationPage> {
     configurationItems.add(Divider());
     configurationItems.add(ListTile(
       title: Text("Über Wetterwolke"),
-      subtitle: Text("Version 1 vom 25.8.2019"),
+      subtitle: Text("Version 1.0.2 vom 31.8.2019"),
     ));
     return configurationItems;
   }

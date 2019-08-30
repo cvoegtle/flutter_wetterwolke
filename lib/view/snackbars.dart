@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UpdateDataSnackBar extends SnackBar {
-
+  
   UpdateDataSnackBar() :
         super (
           content: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -10,5 +10,7 @@ class UpdateDataSnackBar extends SnackBar {
               padding: EdgeInsets.only(right: 10),
             ),
             Text("Wetterdaten werden aktualisiert")
-          ])){}
+          ]),
+        duration: Duration(seconds: 3) 
+      ){}
 }

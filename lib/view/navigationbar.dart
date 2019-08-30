@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wetterwolke/data/weatherdata.dart';
 import 'package:flutter_wetterwolke/view/diagramviewer.dart';
+import 'package:flutter_wetterwolke/view/infopage.dart';
 import 'package:flutter_wetterwolke/view/snackbars.dart';
 
 import '../data/configuration.dart';
@@ -29,7 +30,13 @@ class NavigationBar extends StatelessWidget {
             icon: Icon(Icons.settings),
             onPressed: () {
               navigateToConfiguration(context, weatherData.configuration);
-            })
+            }),
+        IconButton(
+          icon: Icon(Icons.info),
+          onPressed: () {
+            navigateToInfo(context);
+          },
+        )
       ],
     );
   }
@@ -47,6 +54,12 @@ class NavigationBar extends StatelessWidget {
         MaterialPageRoute(
             builder: (context) => ConfigurationPage(configuration)));
     weatherData.reinitialize();
+  }
+
+  void navigateToInfo(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) =>InfoPage()));
+    
   }
 
 }

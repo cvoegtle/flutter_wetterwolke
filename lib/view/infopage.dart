@@ -9,57 +9,79 @@ class InfoPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(centerTitle: true, title: Text("Wetter Wolke Info")),
         body: Container(
-          padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(8),
             child: Center(
-            child: Column(children: [
-              RichText(
-                  text: TextSpan(children: [
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                  Caption("Über das Projekt"),
+                  RichText(
+                      text: TextSpan(children: [
                     TextSpan(
                         text:
-                        "Diese App ist eine Technologie-Demo für Cross Plattform Entwicklung mit ",
+                            "Diese App ist eine Technologie-Demo für Cross Plattform Entwicklung mit ",
                         style: TextStyle(color: Colors.black)),
-                    TextSpan(
-                        text: "Flutter",
-                        style: TextStyle(
-                            color: Colors.blue,
-                            decoration: TextDecoration.underline),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            launch("https://flutter.dev");
-                          }),
+                    Link("Flutter", "https://flutter.dev"),
                     TextSpan(
                         text: ". Die App kann im Appstore für ",
                         style: TextStyle(color: Colors.black)),
+                    Link("iOS",
+                        "https://apps.apple.com/de/app/wetter-wolke/id1477964849"),
                     TextSpan(
-                        text: "iOS",
-                        style: TextStyle(
-                            color: Colors.blue,
-                            decoration: TextDecoration.underline),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            launch(
-                                "https://apps.apple.com/de/app/wetter-wolke/id1477964849");
-                          }),
-                    TextSpan(text: " und im Google Playstore für ",
+                        text: " und im Google Playstore für ",
                         style: TextStyle(color: Colors.black)),
-                    TextSpan(
-                        text: "Android",
-                        style: TextStyle(
-                            color: Colors.blue,
-                            decoration: TextDecoration.underline),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            launch(
-                                "https://play.google.com/store/apps/details?id=org.voegtle.weatherwidget");
-                          }),
+                    Link("Android",
+                        "https://play.google.com/store/apps/details?id=org.voegtle.weatherwidget"),
                     TextSpan(
                         text: " geladen werden.",
                         style: TextStyle(color: Colors.black)),
                   ])),
-              Text(""),
-              Text(
-                  "Wetter Wolke ist ein Netz privater Wetterstationen in Deutschland mit einer Außenstelle in Shenzhen."),
-
-            ]))));
+                  Text(""),
+                  Text(
+                      "Wetter Wolke ist ein Netz privater Wetterstationen in Deutschland mit einer Außenstelle in Shenzhen."),
+                  Divider(),
+                  Caption("Kontakt"),
+                  Text("Projekt bei Github"),
+                  RichText(
+                      text: Link(
+                          "https://github.com/cvoegtle/flutter_wetterwolke",
+                          "https://github.com/cvoegtle/flutter_wetterwolke")),
+                  Text("Mail an Entwickler"),
+                  RichText(
+                      text: Link("christian@voegtle.org",
+                          "mailto:christian@voegtle.org")),
+                  Divider(),
+                  Caption("Versions Information"),
+                  Text("Version 1.0.2 vom 31.08.2019")
+                ]))));
   }
+}
+
+class Caption extends StatelessWidget {
+  final String text;
+
+  Caption(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Text(text,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          )),
+      padding: EdgeInsets.only(bottom: 5),
+    );
+  }
+}
+
+class Link extends TextSpan {
+  Link(String text, String url)
+      : super(
+            text: text,
+            style: TextStyle(
+                color: Colors.blue, decoration: TextDecoration.underline),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                launch(url);
+              });
 }

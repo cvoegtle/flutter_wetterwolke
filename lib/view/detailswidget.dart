@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_wetterwolke/data/configuration.dart';
 import 'package:flutter_wetterwolke/data/statistics.dart';
 import 'package:flutter_wetterwolke/data/weatherdata.dart';
@@ -27,23 +28,26 @@ class WeatherDetailspage extends StatelessWidget {
         },
         child: Scaffold(
             appBar: AppBar(
-                title: Text(
-                    '${this.weatherData.location} ${distance()}')),
+                title: Text('${this.weatherData.location} ${distance()}')),
             body: ListView(children: [
               DetailsTitle("Messwerte von ${weatherData.localtime}"),
               WeatherDetails(this.weatherData),
               DetailsTitle("Statistik"),
               Container(
-                padding: EdgeInsets.only(left: 8.0),
-              child: Consumer<StatisticsModel>(
-                  builder: (context, statisticsModel, child) {
-                    return
-                      StatisticsViewer(statisticsModel.statistics);
+                  padding: EdgeInsets.only(left: 8.0),
+                  height: 110,
+                  child: Consumer<StatisticsModel>(
+                      builder: (context, statisticsModel, child) {
+                    return ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        StatisticsViewer(statisticsModel.statistics)
+                      ],
+                    );
                   })),
               DetailsTitle("Diagramme"),
               DiagramViewer(location.diagrams)
-            ]))
-    );
+            ])));
   }
 
   String distance() {

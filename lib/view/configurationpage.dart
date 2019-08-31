@@ -46,11 +46,6 @@ class ConfigurationState extends State<ConfigurationPage> {
           },
         )));
     textController.text = configuration.secret;
-    configurationItems.add(Divider());
-    configurationItems.add(ListTile(
-      title: Text("Über Wetterwolke"),
-      subtitle: Text("Version 1.0.2 vom 31.8.2019"),
-    ));
     return configurationItems;
   }
 

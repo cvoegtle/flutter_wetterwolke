@@ -101,7 +101,9 @@ List<String> formatStatisticsSet(StatisticsSet stats) {
 }
 
 String mapRange(String range) {
-  if (range == "today") {
+  if (range == "lastHour") {
+    return "1h";
+  } else if (range == "today") {
     return "Heute";
   } else if (range == "yesterday") {
     return "Gestern";

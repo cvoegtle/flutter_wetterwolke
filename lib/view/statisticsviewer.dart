@@ -23,19 +23,25 @@ class StatisticsViewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: widgets);
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start, children: widgets);
   }
 }
 
 class StatisticsRow extends StatelessWidget {
   static const _column_width = [65.0, 50.0, 50.0, 50.0, 70.0, 80.0];
   TextStyle firstColumn = TextStyle(fontWeight: FontWeight.bold);
-  TextStyle columnStyle = TextStyle(fontWeight: FontWeight.normal); 
+  TextStyle columnStyle = TextStyle(fontWeight: FontWeight.normal);
   List<Widget> cells = [];
-  
+
   StatisticsRow(List<String> text) {
     if (text.length > 0) {
-      cells.add(StatisticsCell(firstColumn, _column_width[0], text[0], textAlign: TextAlign.left,));
+      cells.add(StatisticsCell(
+        firstColumn,
+        _column_width[0],
+        text[0],
+        textAlign: TextAlign.left,
+      ));
     }
 
     for (var i = 1; i < text.length; i++) {
@@ -53,7 +59,6 @@ class HeaderRow extends StatisticsRow {
   TextStyle columnStyle = TextStyle(fontWeight: FontWeight.bold);
 
   HeaderRow(List<String> text) : super(text);
-  
 }
 
 class StatisticsCell extends StatelessWidget {
@@ -62,11 +67,12 @@ class StatisticsCell extends StatelessWidget {
   final String value;
   final TextAlign textAlign;
 
-  const StatisticsCell(this.style, this.width, this.value, {this.textAlign = TextAlign.right});
-  
+  const StatisticsCell(this.style, this.width, this.value,
+      {this.textAlign = TextAlign.right});
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(width: width, child: Text(value, style: style, textAlign: textAlign));
+    return SizedBox(
+        width: width, child: Text(value, style: style, textAlign: textAlign));
   }
-  
 }

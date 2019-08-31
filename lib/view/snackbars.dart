@@ -12,5 +12,5 @@ class UpdateDataSnackBar extends SnackBar {
             Text("Wetterdaten werden aktualisiert")
           ]),
         duration: Duration(seconds: 3) 
-      ){}
+      );
 }

@@ -90,7 +90,7 @@ class WeatherTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-        color: Colors.orange,
+        color: Colors.orangeAccent,
         padding: EdgeInsets.only(left: 8.0, top: 4, bottom: 4, right: 8),
         child: Text(
           "${weatherData.location} - ${weatherData.localtime} ${distance()}",

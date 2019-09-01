@@ -8,7 +8,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Wetterwolke 2"
+        android:label="Wetter Wolke 2"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

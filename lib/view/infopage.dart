@@ -50,6 +50,11 @@ class InfoPage extends StatelessWidget {
                   RichText(
                       text: Link("christian@voegtle.org",
                           "mailto:christian@voegtle.org")),
+                  Text("Hilfe und Support"),
+                      RichText(
+                          text: Link(
+                              "https://github.com/cvoegtle/flutter_wetterwolke/HELP.md",
+                              "https://github.com/cvoegtle/flutter_wetterwolke/HELP.md")),
                   Divider(),
                   Caption("Versions Information"),
                   Text("Version 1.0.2 vom 01.09.2019")

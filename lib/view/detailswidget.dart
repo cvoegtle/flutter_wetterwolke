@@ -14,10 +14,12 @@ class WeatherDetailspage extends StatelessWidget {
   final WeatherData weatherData;
   final LocationConfiguration location;
   StatisticsModel statisticsModel;
+  String title;
 
   WeatherDetailspage(this.weatherData, this.location) {
     statisticsModel = StatisticsModel(location.location);
     statisticsModel.fetch();
+    title = "${this.weatherData.location} ${distance()}";
   }
 
   @override
@@ -28,7 +30,7 @@ class WeatherDetailspage extends StatelessWidget {
         },
         child: Scaffold(
             appBar: AppBar(
-                title: Text('${this.weatherData.location} ${distance()}')),
+                title: Text(title)),
             body: ListView(children: [
               DetailsTitle("Messwerte von ${weatherData.localtime}"),
               WeatherDetails(this.weatherData),
@@ -46,7 +48,7 @@ class WeatherDetailspage extends StatelessWidget {
                     );
                   })),
               DetailsTitle("Diagramme"),
-              DiagramViewer(location.diagrams)
+              DiagramPreviewer(title, location.diagrams)
             ])));
   }
 
@@ -62,13 +64,12 @@ class DetailsTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
-        padding: EdgeInsets.only(left: 8.0, top: 8, bottom: 4, right: 8),
+        padding: EdgeInsets.only(left: 8, top: 8, bottom: 4, right: 8),
         child: Text(text,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
-                color: Colors.deepOrange)));
+                color: Colors.orange)));
   }
 }

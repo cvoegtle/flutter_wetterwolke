@@ -7,7 +7,7 @@ class InfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(centerTitle: true, title: Text("Wetter Wolke Info")),
+        appBar: AppBar(centerTitle: true, title: Text("Wetter Wolke")),
         body: Container(
             padding: EdgeInsets.all(8),
             child: Center(
@@ -52,7 +52,7 @@ class InfoPage extends StatelessWidget {
                           "mailto:christian@voegtle.org")),
                   Divider(),
                   Caption("Versions Information"),
-                  Text("Version 1.0.2 vom 31.08.2019")
+                  Text("Version 1.0.2 vom 01.09.2019")
                 ]))));
   }
 }
@@ -67,8 +67,9 @@ class Caption extends StatelessWidget {
     return Container(
       child: Text(text,
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-          )),
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.orange)),
       padding: EdgeInsets.only(bottom: 5),
     );
   }

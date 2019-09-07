@@ -48,7 +48,7 @@ class WetterWolkeAppState extends State<WetterWolkeApp>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      if (DateTime.now().difference(lastResume) > Duration(minutes: 1)) {
+      if (DateTime.now().difference(lastResume) > Duration(seconds: 15)) {
         weatherModel.fetch();
         lastResume = DateTime.now();
       }

@@ -13,9 +13,11 @@ class LocationProvider {
       if (permissionGranted) {
         fetchIfAllowed((proceedProcessing));
       } else {
+        currentPosition = null;
         proceedProcessing();
       }
     }).catchError((_) {
+      currentPosition = null;
       proceedProcessing();
     });
   }

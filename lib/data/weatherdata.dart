@@ -13,6 +13,8 @@ class WeatherDataModel extends ChangeNotifier {
   Set<String> locations = Set();
   Configuration configuration = Configuration([], []);
   final List<WeatherData> _dataSets = [];
+  bool _initialized = false;
+  
 
   UnmodifiableListView<WeatherData> get dataSets =>
       UnmodifiableListView(_dataSets);
@@ -25,6 +27,11 @@ class WeatherDataModel extends ChangeNotifier {
   }
 
   void fetch() {
+    if (_initialized) {
+      _fetch();
+    }
+  }
+  void _fetch() {
     locationProvider.fetch(proceedWithFetchData);
   }
   
@@ -60,8 +67,9 @@ class WeatherDataModel extends ChangeNotifier {
       }
     });
     configuration.secret = prefs.getString("secret");
-
-    fetch();
+    
+    _initialized = true;
+    _fetch();
   }
 
   void reinitialize() {

@@ -9,11 +9,13 @@ class LocationProvider {
   var location = new Location();
 
   void fetch(void Function() proceedProcessing) {
-    location
-        .requestPermission()
-        .then((permissionGranted) => fetchIfAllowed(proceedProcessing))
-        .catchError((_) {
-      onError:
+    location.requestPermission().then((permissionGranted) {
+      if (permissionGranted) {
+        fetchIfAllowed((proceedProcessing));
+      } else {
+        proceedProcessing();
+      }
+    }).catchError((_) {
       proceedProcessing();
     });
   }
@@ -23,7 +25,6 @@ class LocationProvider {
       updateLocation(locationData);
       proceedProcessing();
     }).catchError((_) {
-      onError:
       proceedProcessing();
     });
   }

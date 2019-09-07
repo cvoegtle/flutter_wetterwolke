@@ -14,7 +14,6 @@ void runWetterWolke() {
   runApp(new WetterWolkeApp());
 }
 
-
 class WetterWolkeApp extends StatefulWidget {
   WetterWolkeApp();
 
@@ -22,8 +21,10 @@ class WetterWolkeApp extends StatefulWidget {
   WetterWolkeAppState createState() => WetterWolkeAppState();
 }
 
-class WetterWolkeAppState extends State<WetterWolkeApp> with WidgetsBindingObserver {
+class WetterWolkeAppState extends State<WetterWolkeApp>
+    with WidgetsBindingObserver {
   var weatherModel = WeatherDataModel();
+  DateTime lastResume = DateTime.now();
 
   @override
   void initState() {
@@ -37,21 +38,22 @@ class WetterWolkeAppState extends State<WetterWolkeApp> with WidgetsBindingObser
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
         builder: (context) => weatherModel, child: WetterStartpage());
   }
 
-  
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      weatherModel.fetch();
+      if (DateTime.now().difference(lastResume) > Duration(minutes: 1)) {
+        weatherModel.fetch();
+        lastResume = DateTime.now();
+      }
     }
   }
-  
 }
 
 class WetterStartpage extends StatelessWidget with WidgetsBindingObserver {
@@ -72,23 +74,20 @@ class WetterStartpage extends StatelessWidget with WidgetsBindingObserver {
         // is not restarted.
         primarySwatch: Colors.lightBlue,
       ),
-      home: Consumer<WeatherDataModel>(builder: (context, weatherData, child) =>
-          Scaffold(
-            appBar: AppBar(title: Text('Wetter Wolke')),
-            bottomNavigationBar: NavigationBar(weatherData),
-            body: Center(
-                child: WeatherList(
-                  weatherData.dataSets,
-                  weatherData.configuration.locations,
-                  onReload: () {
-                    weatherData.fetch();
-                  },
-                )),
-          ),
+      home: Consumer<WeatherDataModel>(
+        builder: (context, weatherData, child) => Scaffold(
+          appBar: AppBar(title: Text('Wetter Wolke')),
+          bottomNavigationBar: NavigationBar(weatherData),
+          body: Center(
+              child: WeatherList(
+            weatherData.dataSets,
+            weatherData.configuration.locations,
+            onReload: () {
+              weatherData.fetch();
+            },
+          )),
+        ),
       ),
     );
   }
-
-
 }
-

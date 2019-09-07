@@ -4,20 +4,27 @@ import 'package:flutter_wetterwolke/data/statistics.dart';
 class StatisticsViewer extends StatelessWidget {
   List<String> columns = ["", "Regen", "T min", "T max"];
   List<String> solarColumns = ["∑ Sonne", "Max Sonne"];
+  List<String> energyColumns = ["∑ kWh"];
   final Statistics statistics;
   List<Widget> widgets = [];
 
   StatisticsViewer(this.statistics) {
     if (this.statistics != null) {
-      if (this.statistics.containsSolarInformation()) {
-        columns.addAll(solarColumns);
-      }
+      addSolarColumns();
       widgets.add(HeaderRow(columns));
       for (StatisticsSet stats in statistics.range) {
         widgets.add(StatisticsRow(formatStatisticsSet(stats)));
       }
     } else {
       widgets.add(Text("Einen Moment noch"));
+    }
+  }
+
+  void addSolarColumns() {
+    if (this.statistics.containsSolarInformation()) {
+      columns.addAll(solarColumns);
+    } else if (this.statistics.containsCollectedEnergy()) {
+      columns.addAll(energyColumns);
     }
   }
 

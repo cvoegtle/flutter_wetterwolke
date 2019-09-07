@@ -44,6 +44,11 @@ class Statistics {
     var statisticSetWithSolar = range.firstWhere((statisticSet) => statisticSet.containsSolarInformation(), orElse: () => null);
     return statisticSetWithSolar != null;
   }
+  
+  bool containsCollectedEnergy() {
+    var statisticSetWithSolar = range.firstWhere((statisticSet) => statisticSet.containsCollectedEnergy(), orElse: () => null);
+    return statisticSetWithSolar != null;
+  }
 }
 
 List<StatisticsSet> convertRangeFromJson(List<dynamic> jsonSets) {
@@ -84,7 +89,11 @@ class StatisticsSet {
       };
 
   bool containsSolarInformation() {
-    return solarRadiationMax != null || kwh != null;
+    return solarRadiationMax != null && kwh != null;
+  }
+
+  bool containsCollectedEnergy() {
+    return solarRadiationMax == null && kwh != null;
   }
 
 }

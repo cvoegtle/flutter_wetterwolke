@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wetterwolke/data/configuration.dart';
+import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
@@ -28,7 +29,7 @@ class DiagramPreviewer extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         child: Container(
-            padding: EdgeInsets.all(8), child: Image.network(diagrams[0].url)),
+            padding: EdgeInsets.all(8), child: Image.network(appendTime(diagrams[0].url))),
         onTap: () {
           Navigator.push(
               context,
@@ -49,7 +50,7 @@ class DiagramViewer extends StatelessWidget {
       scrollPhysics: const BouncingScrollPhysics(),
       builder: (BuildContext context, int index) {
         return PhotoViewGalleryPageOptions(
-          imageProvider: NetworkImage(diagrams[index].url),
+          imageProvider: NetworkImage(appendTime(diagrams[index].url)),
           initialScale: PhotoViewComputedScale.contained * 0.95,
           heroTag: diagrams[index].description,
         );
@@ -57,4 +58,9 @@ class DiagramViewer extends StatelessWidget {
       itemCount: diagrams.length,
     );
   }
+}
+
+String appendTime(String url) {
+  String dateWithHour = new DateFormat("yyyy-mm-dd-h").format(DateTime.now());
+  return url + "&" + dateWithHour;
 }

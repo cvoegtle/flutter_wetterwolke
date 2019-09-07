@@ -53,11 +53,11 @@ class InfoPage extends StatelessWidget {
                   Text("Hilfe und Support"),
                       RichText(
                           text: Link(
-                              "https://github.com/cvoegtle/flutter_wetterwolke/HELP.md",
-                              "https://github.com/cvoegtle/flutter_wetterwolke/HELP.md")),
+                              "Bedienungshinweise online",
+                              "https://github.com/cvoegtle/flutter_wetterwolke/blob/master/HELP.md")),
                   Divider(),
                   Caption("Versions Information"),
-                  Text("Version 1.0.2 vom 01.09.2019")
+                  Text("Version 1.0.4 vom 07.09.2019")
                 ]))));
   }
 }

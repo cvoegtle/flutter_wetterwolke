@@ -25,7 +25,10 @@ class WeatherDataModel extends ChangeNotifier {
   }
 
   void fetch() {
-    locationProvider.fetch();
+    locationProvider.fetch(proceedWithFetchData);
+  }
+  
+  void proceedWithFetchData() {
     fetchData(locations, additional: "&secret=${configuration.secret}")
         .then((response) => processWeatherData(response));
   }

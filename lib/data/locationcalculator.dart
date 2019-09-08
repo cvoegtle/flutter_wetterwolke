@@ -6,20 +6,29 @@ import 'package:vector_math/vector_math.dart';
 
 class LocationProvider {
   Position currentPosition;
+  bool permissionGranted;
   var location = new Location();
 
   void fetch(void Function() proceedProcessing) {
+    if (permissionGranted) {
+      fetchIfAllowed((proceedProcessing));
+    } else {
+      proceedWithoutLocation(proceedProcessing);
+    }
+  }
+
+  void fetchWithPermissionCheck(void Function() proceedProcessing) {
     location.requestPermission().then((permissionGranted) {
-      if (permissionGranted) {
-        fetchIfAllowed((proceedProcessing));
-      } else {
-        currentPosition = null;
-        proceedProcessing();
-      }
-    }).catchError((_) {
-      currentPosition = null;
-      proceedProcessing();
+      this.permissionGranted = permissionGranted;
+      fetch(proceedProcessing);
+    }, onError: (_) {
+      proceedWithoutLocation(proceedProcessing);
     });
+  }
+  
+  void proceedWithoutLocation(void proceedProcessing()) {
+    currentPosition = null;
+    proceedProcessing();
   }
 
   fetchIfAllowed(void Function() proceedProcessing) {

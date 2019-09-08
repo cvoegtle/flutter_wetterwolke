@@ -76,7 +76,7 @@ class WetterStartpage extends StatelessWidget with WidgetsBindingObserver {
       ),
       home: Consumer<WeatherDataModel>(
         builder: (context, weatherData, child) => Scaffold(
-          appBar: AppBar(title: Text('Wetter Wolke')),
+          appBar: AppBar(title: Text(getCaption(weatherData))),
           bottomNavigationBar: NavigationBar(weatherData),
           body: Center(
               child: WeatherList(
@@ -90,4 +90,6 @@ class WetterStartpage extends StatelessWidget with WidgetsBindingObserver {
       ),
     );
   }
+
+  String getCaption(WeatherDataModel weatherData) => weatherData.fetchConfigurationError == null ? 'Wetter Wolke' : weatherData.fetchConfigurationError;
 }

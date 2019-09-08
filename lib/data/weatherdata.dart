@@ -14,7 +14,7 @@ class WeatherDataModel extends ChangeNotifier {
   Configuration configuration = Configuration([], []);
   final List<WeatherData> _dataSets = [];
   bool _initialized = false;
-  
+  String fetchConfigurationError;
 
   UnmodifiableListView<WeatherData> get dataSets =>
       UnmodifiableListView(_dataSets);
@@ -23,6 +23,12 @@ class WeatherDataModel extends ChangeNotifier {
   void init() {
     fetchConfiguration().then((response) {
       processConfiguration(response);
+    }, onError: (e) {
+      fetchConfigurationError = "onError: " + e;
+      notifyListeners();
+    }).catchError((e) {
+      fetchConfigurationError = "catchError: " + e;
+      notifyListeners();
     });
   }
 
@@ -31,10 +37,11 @@ class WeatherDataModel extends ChangeNotifier {
       locationProvider.fetch(proceedWithFetchData);
     }
   }
+
   void _fetchWitPermissionCheck() {
     locationProvider.fetchWithPermissionCheck(proceedWithFetchData);
   }
-  
+
   void proceedWithFetchData() {
     fetchData(locations, additional: "&secret=${configuration.secret}")
         .then((response) => processWeatherData(response));
@@ -67,7 +74,7 @@ class WeatherDataModel extends ChangeNotifier {
       }
     });
     configuration.secret = prefs.getString("secret");
-    
+
     _initialized = true;
     _fetchWitPermissionCheck();
   }

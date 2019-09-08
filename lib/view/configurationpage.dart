@@ -40,7 +40,6 @@ class ConfigurationState extends State<ConfigurationPage> {
     configurationItems.add(ListTile(
         title: Text("Geheimnis"),
         subtitle: TextField(controller: textController,
-          obscureText: true,
           onChanged: (String secret) {
             _setSecret(secret);
           },

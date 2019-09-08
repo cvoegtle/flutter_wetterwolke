@@ -24,10 +24,10 @@ class WeatherDataModel extends ChangeNotifier {
     fetchConfiguration().then((response) {
       processConfiguration(response);
     }, onError: (e) {
-      fetchConfigurationError = "onError: " + e;
+      fetchConfigurationError = "onError: " + e.toString();
       notifyListeners();
     }).catchError((e) {
-      fetchConfigurationError = "catchError: " + e;
+      fetchConfigurationError = "catchError: " + e.toString();
       notifyListeners();
     });
   }

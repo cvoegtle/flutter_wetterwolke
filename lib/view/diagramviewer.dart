@@ -52,7 +52,6 @@ class DiagramViewer extends StatelessWidget {
         return PhotoViewGalleryPageOptions(
           imageProvider: NetworkImage(appendTime(diagrams[index].url)),
           initialScale: PhotoViewComputedScale.contained * 0.95,
-          heroTag: diagrams[index].description,
         );
       },
       itemCount: diagrams.length,

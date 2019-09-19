@@ -1,9 +1,13 @@
+import 'dart:collection';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wetterwolke/data/weatherdata.dart';
 import 'package:flutter_wetterwolke/view/diagramviewer.dart';
 import 'package:flutter_wetterwolke/view/infopage.dart';
+import 'package:flutter_wetterwolke/view/mappage.dart';
 import 'package:flutter_wetterwolke/view/snackbars.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../data/configuration.dart';
 import 'configurationpage.dart';
@@ -26,6 +30,12 @@ class NavigationBar extends StatelessWidget {
         onPressed: () {
           navigateToDiagrams(context, weatherData.configuration.diagramsOverall);
         },),
+        IconButton(icon: Icon(Icons.map),
+          onPressed: () {
+            navigateToMap(context, weatherData.dataSets);
+          },
+        ),
+        
         IconButton(
             icon: Icon(Icons.settings),
             onPressed: () {
@@ -60,6 +70,12 @@ class NavigationBar extends StatelessWidget {
     Navigator.push(context, MaterialPageRoute(
       builder: (context) =>InfoPage()));
     
+  }
+
+  void navigateToMap(BuildContext context, UnmodifiableListView<WeatherData> weatherData) {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) => MapPage(title: "Wetter Wolke - Kartenansicht", center: LatLng(51.7274315, 8.7348741), weatherData: weatherData)
+    ));
   }
 
 }

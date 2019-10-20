@@ -26,6 +26,11 @@ class NavigationBar extends StatelessWidget {
         onPressed: () {
           navigateToDiagrams(context, weatherData.configuration.diagramsOverall);
         },),
+        IconButton(icon: Icon(Icons.map),
+          onPressed: () {
+            navigateToMap(context, weatherData.dataSets);
+          },
+        ),
         IconButton(
             icon: Icon(Icons.settings),
             onPressed: () {

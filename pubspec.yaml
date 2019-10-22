@@ -32,6 +32,7 @@ dependencies:
   photo_view: ^0.5.0
   location: ^2.3.5
   flutter_map: ^0.7.3
+  latlong: ^0.6.1
 
 
 dev_dependencies:

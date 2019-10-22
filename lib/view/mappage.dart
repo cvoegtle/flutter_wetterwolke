@@ -24,7 +24,7 @@ class MapPage extends StatelessWidget {
         child: FlutterMap(
           options: MapOptions(
             center: center,
-            zoom: 11.0,
+            zoom: 6.0,
           ),
           layers: [
             new TileLayerOptions(

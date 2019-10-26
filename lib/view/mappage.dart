@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/src/layer/tile_provider/tile_provider.dart';
+import 'package:flutter_wetterwolke/data/configuration.dart';
 import 'package:flutter_wetterwolke/data/weatherdata.dart';
+import 'package:flutter_wetterwolke/view/detailswidget.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong/latlong.dart';
 
@@ -10,8 +12,9 @@ class MapPage extends StatelessWidget {
   final String title;
   final LatLng center;
   final List<WeatherData> weatherData;
+  final List<LocationConfiguration> locations;
 
-  MapPage({Key key, this.title, this.center, this.weatherData})
+  MapPage({Key key, this.title, this.center, this.weatherData, this.locations})
       : super(key: key);
 
   @override
@@ -33,7 +36,7 @@ class MapPage extends StatelessWidget {
               tileProvider: CachedNetworkTileProvider(),
             ),
             new MarkerLayerOptions(
-              markers: createMarkerForLocations(),
+              markers: createMarkerForLocations(context),
             ),
           ],
         ),
@@ -41,15 +44,23 @@ class MapPage extends StatelessWidget {
     );
   }
 
-  List<Marker> createMarkerForLocations() {
+  List<Marker> createMarkerForLocations(BuildContext context) {
     NumberFormat formatter = NumberFormat("#,###.#");
-    return weatherData.map((dataSet) =>
-        Marker(width: 31,
+    return weatherData
+        .map((dataSet) => Marker(
+            width: 31,
             height: 44,
             point: LatLng(dataSet.latitude, dataSet.longitude),
-          builder: (ctx) => new Container(
-            child: Image(image: AssetImage('res/images/marker.png')),
-          ), anchorPos: AnchorPos.align(AnchorAlign.top))).toList();
+            builder: (ctx) => GestureDetector(
+                child: Image(image: AssetImage('res/images/marker.png')),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => WeatherDetailspage(dataSet,
+                              configurationByLocation(locations, dataSet.id))));
+                }),
+            anchorPos: AnchorPos.align(AnchorAlign.top)))
+        .toList();
   }
-
 }

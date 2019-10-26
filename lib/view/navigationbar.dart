@@ -21,16 +21,24 @@ class NavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ButtonBar(
       children: <Widget>[
-        IconButton(icon: Icon(Icons.cloud_download),
-        onPressed: () {
-          Scaffold.of(context).showSnackBar(UpdateDataSnackBar());
-          this.weatherData.fetch();
-        },),
-        IconButton(icon: Icon(Icons.photo_library,),
-        onPressed: () {
-          navigateToDiagrams(context, weatherData.configuration.diagramsOverall);
-        },),
-        IconButton(icon: Icon(Icons.map),
+        IconButton(
+          icon: Icon(Icons.cloud_download),
+          onPressed: () {
+            Scaffold.of(context).showSnackBar(UpdateDataSnackBar());
+            this.weatherData.fetch();
+          },
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.photo_library,
+          ),
+          onPressed: () {
+            navigateToDiagrams(
+                context, weatherData.configuration.diagramsOverall);
+          },
+        ),
+        IconButton(
+          icon: Icon(Icons.map),
           onPressed: () {
             navigateToMap(context, weatherData.dataSets);
           },
@@ -50,14 +58,16 @@ class NavigationBar extends StatelessWidget {
     );
   }
 
-  void navigateToDiagrams (BuildContext context, List<DiagramConfiguration> diagrams) {
+  void navigateToDiagrams(
+      BuildContext context, List<DiagramConfiguration> diagrams) {
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => DiagramPage("Diagramme", diagrams)));
   }
 
-  void navigateToConfiguration(BuildContext context, Configuration configuration) async {
+  void navigateToConfiguration(
+      BuildContext context, Configuration configuration) async {
     await Navigator.push(
         context,
         MaterialPageRoute(
@@ -66,16 +76,19 @@ class NavigationBar extends StatelessWidget {
   }
 
   void navigateToInfo(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) =>InfoPage()));
-    
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => InfoPage()));
   }
 
-  void navigateToMap(BuildContext context, UnmodifiableListView<WeatherData> weatherData) {
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) => MapPage(title: "Wetter Wolke - Kartenansicht", center: LatLng(51.7274315, 8.7348741), weatherData: weatherData)
-    ));
+  void navigateToMap(
+      BuildContext context, UnmodifiableListView<WeatherData> weatherData) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MapPage(
+                title: "Wetter Wolke - Kartenansicht",
+                center: LatLng(51.7274315, 8.7348741),
+                weatherData: weatherData,
+                locations: this.weatherData.configuration.locations)));
   }
-
 }
-

@@ -48,11 +48,17 @@ class MapPage extends StatelessWidget {
     NumberFormat formatter = NumberFormat("#,###.#");
     return weatherData
         .map((dataSet) => Marker(
-            width: 31,
             height: 44,
+            width: 80,
             point: LatLng(dataSet.latitude, dataSet.longitude),
             builder: (ctx) => GestureDetector(
-                child: Image(image: AssetImage('res/images/marker.png')),
+                child: Row(children: <Widget>[
+                  Image(image: AssetImage('res/images/marker.png')),
+                  Text(
+                    "${formatter.format(dataSet.temperature)}°C",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )
+                ]),
                 onTap: () {
                   Navigator.push(
                       context,
@@ -60,7 +66,7 @@ class MapPage extends StatelessWidget {
                           builder: (context) => WeatherDetailspage(dataSet,
                               configurationByLocation(locations, dataSet.id))));
                 }),
-            anchorPos: AnchorPos.align(AnchorAlign.top)))
+            anchorPos: AnchorPos.exactly(Anchor(80.0-16.0, 0))))
         .toList();
   }
 }

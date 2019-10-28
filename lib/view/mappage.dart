@@ -45,28 +45,44 @@ class MapPage extends StatelessWidget {
   }
 
   List<Marker> createMarkerForLocations(BuildContext context) {
-    NumberFormat formatter = NumberFormat("#,###.#");
     return weatherData
-        .map((dataSet) => Marker(
-            height: 44,
-            width: 80,
-            point: LatLng(dataSet.latitude, dataSet.longitude),
-            builder: (ctx) => GestureDetector(
-                child: Row(children: <Widget>[
-                  Image(image: AssetImage('res/images/marker.png')),
-                  Text(
-                    "${formatter.format(dataSet.temperature)}°C",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )
-                ]),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => WeatherDetailspage(dataSet,
-                              configurationByLocation(locations, dataSet.id))));
-                }),
-            anchorPos: AnchorPos.exactly(Anchor(80.0-16.0, 0))))
+        .map((dataSet) =>
+        WeatherMarker(
+            context, dataSet, configurationByLocation(locations, dataSet.id)))
         .toList();
   }
+}
+
+class WeatherMarker extends Marker {
+  final BuildContext context;
+  final WeatherData weatherData;
+  final LocationConfiguration configuration;
+
+  WeatherMarker(this.context, this.weatherData, this.configuration) : super(
+      height: 44,
+      width: 80,
+      point: LatLng(weatherData.latitude, weatherData.longitude),
+      builder: (ctx) {
+        NumberFormat formatter = NumberFormat("#,###.#");
+        return GestureDetector(
+            child: Row(children: <Widget>[
+              Image(image: AssetImage('res/images/marker.png')),
+              Text(
+                "${formatter.format(weatherData.temperature)}°C",
+                style: TextStyle(fontWeight: FontWeight.bold,
+                    backgroundColor: Color.fromARGB(140, 230, 230, 255)),
+              )
+            ]),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          WeatherDetailspage(weatherData, configuration
+                          )));
+            });
+      },
+      anchorPos: AnchorPos.exactly(Anchor(80.0 - 16.0, 0))
+
+  );
 }

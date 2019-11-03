@@ -46,9 +46,9 @@ SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
-  shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
+  shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
   sqflite: ff1d9da63c06588cc8d1faf7256d741f16989d5a
-  url_launcher: 0067ddb8f10d36786672aa0722a21717dba3a298
+  url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
 
 PODFILE CHECKSUM: aff02bfeed411c636180d6812254b2daeea14d09
 

@@ -29,24 +29,23 @@ class WeatherDetailspage extends StatelessWidget {
           return statisticsModel;
         },
         child: Scaffold(
-            appBar: AppBar(
-                title: Text(title)),
+            appBar: AppBar(title: Text(title)),
             body: ListView(children: [
               DetailsTitle("Messwerte von ${weatherData.localtime}"),
               WeatherDetails(this.weatherData),
               DetailsTitle("Statistik"),
-              Container(
-                  padding: EdgeInsets.only(left: 8.0),
-                  height: 110,
-                  child: Consumer<StatisticsModel>(
-                      builder: (context, statisticsModel, child) {
-                    return ListView(
+              Consumer<StatisticsModel>(
+                  builder: (context, statisticsModel, child) {
+                return Container(
+                    padding: EdgeInsets.only(left: 8.0),
+                    height: 120,                    
+                    child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: <Widget>[
                         StatisticsViewer(statisticsModel.statistics)
                       ],
-                    );
-                  })),
+                    ));
+              }),
               DetailsTitle("Diagramme"),
               DiagramPreviewer(title, location.diagrams)
             ])));

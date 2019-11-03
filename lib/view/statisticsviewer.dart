@@ -1,85 +1,126 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_wetterwolke/data/statistics.dart';
+import 'package:flutter_wetterwolke/formatter.dart';
 
 class StatisticsViewer extends StatelessWidget {
-  List<String> columns = ["", "Regen", "T min", "T max"];
-  List<String> solarColumns = ["∑ Sonne", "Max Sonne"];
-  List<String> energyColumns = ["∑ kWh"];
+  final TextStyle firstColumnStyle = TextStyle(fontWeight: FontWeight.bold);
+  final TextStyle columnStyle = TextStyle(fontWeight: FontWeight.normal);
+
   final Statistics statistics;
   List<Widget> widgets = [];
 
   StatisticsViewer(this.statistics) {
     if (this.statistics != null) {
-      addSolarColumns();
-      widgets.add(HeaderRow(columns));
-      for (StatisticsSet stats in statistics.range) {
-        widgets.add(StatisticsRow(formatStatisticsSet(stats)));
-      }
+      addDefaultColumns();
+      addSolarColumns(this.statistics.range);
     } else {
       widgets.add(Text("Einen Moment noch"));
     }
   }
 
-  void addSolarColumns() {
+  void addDefaultColumns() {
+    widgets.add(firstColumn(this.statistics.range));
+    widgets.add(columnRain(this.statistics.range));
+    widgets.add(columnMinTemperature(this.statistics.range));
+    widgets.add(columnMaxTemperature(this.statistics.range));
+  }
+
+  void addSolarColumns(List<StatisticsSet> range) {
     if (this.statistics.containsSolarInformation()) {
-      columns.addAll(solarColumns);
+      widgets.add(columnSolarSum("∑ Sonne", range));
+      widgets.add(columnSolarMax(range));
     } else if (this.statistics.containsCollectedEnergy()) {
-      columns.addAll(energyColumns);
+      widgets.add(columnSolarSum("∑ kWh", range));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start, children: widgets);
+    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: widgets);
   }
-}
 
-class StatisticsRow extends StatelessWidget {
-  static const _column_width = [65.0, 50.0, 50.0, 50.0, 70.0, 80.0];
-  TextStyle firstColumn = TextStyle(fontWeight: FontWeight.bold);
-  TextStyle columnStyle = TextStyle(fontWeight: FontWeight.normal);
-  List<Widget> cells = [];
+  Widget firstColumn(List<StatisticsSet> range) {
+    List<Widget> cells = [];
+    cells.add(StatisticsCell(firstColumnStyle, ""));
+    for (StatisticsSet set in statistics.range) {
+      cells.add(StatisticsCell(firstColumnStyle, mapRange(set.range)));
+    }
+    return StatisticsColumn(cells, crossAxisAlignment: CrossAxisAlignment.start,);
+  }
 
-  StatisticsRow(List<String> text) {
-    if (text.length > 0) {
+  Widget columnRain(List<StatisticsSet> range) {
+    List<Widget> cells = [];
+    cells.add(StatisticsCell(firstColumnStyle, "Rain"));
+    for (StatisticsSet set in statistics.range) {
+      cells.add(StatisticsCell(columnStyle, format(set.rain, postfix: "l")));
+    }
+    return StatisticsColumn(cells);
+  }
+
+  Widget columnMinTemperature(List<StatisticsSet> range) {
+    List<Widget> cells = [];
+    cells.add(StatisticsCell(firstColumnStyle, "T min"));
+    for (StatisticsSet set in statistics.range) {
       cells.add(StatisticsCell(
-        firstColumn,
-        _column_width[0],
-        text[0],
-        textAlign: TextAlign.left,
-      ));
+          columnStyle, format(set.minTemperature, postfix: "°C")));
     }
-
-    for (var i = 1; i < text.length; i++) {
-      cells.add(StatisticsCell(columnStyle, _column_width[i], text[i]));
-    }
+    return StatisticsColumn(cells);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(children: cells);
+  Widget columnMaxTemperature(List<StatisticsSet> range) {
+    List<Widget> cells = [];
+    cells.add(StatisticsCell(firstColumnStyle, "T max"));
+    for (StatisticsSet set in statistics.range) {
+      cells.add(StatisticsCell(
+          columnStyle, format(set.maxTemperature, postfix: "°C")));
+    }
+    return new StatisticsColumn(cells);
+  }
+
+  Widget columnSolarSum(String caption, List<StatisticsSet> range) {
+    List<Widget> cells = [];
+    cells.add(StatisticsCell(firstColumnStyle, caption));
+    for (StatisticsSet set in statistics.range) {
+      cells.add(StatisticsCell(columnStyle, format(set.kwh, postfix: "kWh")));
+    }
+    return new StatisticsColumn(cells);
+  }
+
+  Widget columnSolarMax(List<StatisticsSet> range) {
+    List<Widget> cells = [];
+    cells.add(StatisticsCell(firstColumnStyle, "Max Sonne"));
+    for (StatisticsSet set in statistics.range) {
+      cells.add(StatisticsCell(
+          columnStyle, format(set.solarRadiationMax, postfix: "W/m²")));
+    }
+    return new StatisticsColumn(cells);
   }
 }
 
-class HeaderRow extends StatisticsRow {
-  TextStyle columnStyle = TextStyle(fontWeight: FontWeight.bold);
+class StatisticsColumn extends StatelessWidget {
+  final List<Widget> cells;
+  final EdgeInsetsGeometry padding = EdgeInsets.only(right: 10.0);
+  final CrossAxisAlignment crossAxisAlignment;
 
-  HeaderRow(List<String> text) : super(text);
+  StatisticsColumn(this.cells, {this.crossAxisAlignment = CrossAxisAlignment.end});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: padding,
+        child: Column(
+            children: cells, crossAxisAlignment: crossAxisAlignment));
+  }
 }
 
 class StatisticsCell extends StatelessWidget {
   final TextStyle style;
-  final double width;
   final String value;
-  final TextAlign textAlign;
 
-  const StatisticsCell(this.style, this.width, this.value,
-      {this.textAlign = TextAlign.right});
+  const StatisticsCell(this.style, this.value);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        width: width, child: Text(value, style: style, textAlign: textAlign));
+    return SizedBox(child: Text(value, style: style));
   }
 }

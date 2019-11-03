@@ -21,14 +21,14 @@ class NavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return ButtonBar(
       children: <Widget>[
-        IconButton(
+        NavigationButton(
           icon: Icon(Icons.cloud_download),
           onPressed: () {
             Scaffold.of(context).showSnackBar(UpdateDataSnackBar());
             this.weatherData.fetch();
           },
         ),
-        IconButton(
+        NavigationButton(
           icon: Icon(
             Icons.photo_library,
           ),
@@ -37,18 +37,18 @@ class NavigationBar extends StatelessWidget {
                 context, weatherData.configuration.diagramsOverall);
           },
         ),
-        IconButton(
+        NavigationButton(
           icon: Icon(Icons.map),
           onPressed: () {
             navigateToMap(context, weatherData.dataSets);
           },
         ),
-        IconButton(
+        NavigationButton(
             icon: Icon(Icons.settings),
             onPressed: () {
               navigateToConfiguration(context, weatherData.configuration);
             }),
-        IconButton(
+        NavigationButton(
           icon: Icon(Icons.info),
           onPressed: () {
             navigateToInfo(context);
@@ -91,4 +91,9 @@ class NavigationBar extends StatelessWidget {
                 weatherData: weatherData,
                 locations: this.weatherData.configuration.locations)));
   }
+}
+
+class NavigationButton extends IconButton {
+  NavigationButton({Icon icon, VoidCallback onPressed})
+      : super(icon: icon, onPressed: onPressed, iconSize: 28.0);
 }

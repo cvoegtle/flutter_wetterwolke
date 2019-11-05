@@ -19,43 +19,47 @@ class NavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ButtonBar(
-      children: <Widget>[
-        NavigationButton(
-          icon: Icon(Icons.cloud_download),
-          onPressed: () {
-            Scaffold.of(context).showSnackBar(UpdateDataSnackBar());
-            this.weatherData.fetch();
-          },
-        ),
-        NavigationButton(
-          icon: Icon(
-            Icons.photo_library,
-          ),
-          onPressed: () {
-            navigateToDiagrams(
-                context, weatherData.configuration.diagramsOverall);
-          },
-        ),
-        NavigationButton(
-          icon: Icon(Icons.map),
-          onPressed: () {
-            navigateToMap(context, weatherData.dataSets);
-          },
-        ),
-        NavigationButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              navigateToConfiguration(context, weatherData.configuration);
-            }),
-        NavigationButton(
-          icon: Icon(Icons.info),
-          onPressed: () {
-            navigateToInfo(context);
-          },
-        )
-      ],
-    );
+    return Container(
+        height: 80.0,
+        child: ListView(scrollDirection: Axis.horizontal, children: [
+          ButtonBar(
+            children: <Widget>[
+              NavigationButton(
+                icon: Icon(Icons.cloud_download),
+                onPressed: () {
+                  Scaffold.of(context).showSnackBar(UpdateDataSnackBar());
+                  this.weatherData.fetch();
+                },
+              ),
+              NavigationButton(
+                icon: Icon(
+                  Icons.photo_library,
+                ),
+                onPressed: () {
+                  navigateToDiagrams(
+                      context, weatherData.configuration.diagramsOverall);
+                },
+              ),
+              NavigationButton(
+                icon: Icon(Icons.map),
+                onPressed: () {
+                  navigateToMap(context, weatherData.dataSets);
+                },
+              ),
+              NavigationButton(
+                  icon: Icon(Icons.settings),
+                  onPressed: () {
+                    navigateToConfiguration(context, weatherData.configuration);
+                  }),
+              NavigationButton(
+                icon: Icon(Icons.info),
+                onPressed: () {
+                  navigateToInfo(context);
+                },
+              )
+            ],
+          )
+        ]));
   }
 
   void navigateToDiagrams(

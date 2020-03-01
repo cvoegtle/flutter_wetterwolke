@@ -25,7 +25,7 @@ class WeatherDetailspage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        builder: (BuildContext context) {
+        create: (BuildContext context) {
           return statisticsModel;
         },
         child: Scaffold(

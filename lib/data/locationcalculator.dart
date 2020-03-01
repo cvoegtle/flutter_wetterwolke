@@ -18,8 +18,8 @@ class LocationProvider {
   }
 
   void fetchWithPermissionCheck(void Function() proceedProcessing) {
-    location.requestPermission().then((permissionGranted) {
-      this.permissionGranted = permissionGranted;
+    location.requestPermission().then((permissionStatus) {
+      this.permissionGranted = permissionStatus == PermissionStatus.GRANTED;
       fetch(proceedProcessing);
     }, onError: (_) {
       proceedWithoutLocation(proceedProcessing);

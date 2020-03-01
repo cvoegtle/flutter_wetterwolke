@@ -42,7 +42,7 @@ class WetterWolkeAppState extends State<WetterWolkeApp>
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        builder: (context) => weatherModel, child: WetterStartpage());
+        create: (context) => weatherModel, child: WetterStartpage());
   }
 
   @override

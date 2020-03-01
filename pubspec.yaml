@@ -11,7 +11,7 @@ description: Wetterwolke in Flutter neu schreiben
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.9+18
+version: 1.12.13+hotfix.5
 
 environment:
   sdk: ">=2.2.0 <3.0.0"
@@ -23,17 +23,19 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  provider: ^3.1.0
+  provider: ^3.2.0
   http: ^0.12.0
-  intl: ^0.15.8
+  intl: ^0.16.0
   vector_math: ^2.0.8
-  shared_preferences: ^0.5.3
-  url_launcher: ^5.1.2
-  photo_view: ^0.5.0
+  shared_preferences: ^0.5.6
+  url_launcher: ^5.4.1
+  photo_view: ^0.9.0
   location: ^2.3.5
-  flutter_map: ^0.7.3
   latlong: ^0.6.1
-
+  flutter_map:
+    git:
+      url: git://github.com/okaxaki/flutter_map.git
+      ref: fix/support-flutter-1.10
 
 dev_dependencies:
   flutter_test:

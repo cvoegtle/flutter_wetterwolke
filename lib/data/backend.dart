@@ -21,4 +21,3 @@ String setToString(Set<String> set, String separator) {
   set.forEach((item) => str += item + separator);
   return str.substring(0, str.length -1);
 }
-

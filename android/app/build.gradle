@@ -47,7 +47,7 @@ android {
 
     defaultConfig {
         applicationId "org.voegtle.flutter_wetterwolke"
-        minSdkVersion 22
+        minSdkVersion 26
         targetSdkVersion 29
         signingConfig signingConfigs.cvoegtle
         versionCode flutterVersionCode.toInteger()
@@ -64,4 +64,10 @@ android {
 
 flutter {
     source '../..'
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }

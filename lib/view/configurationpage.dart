@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wetterwolke/data/configuration.dart';
+import 'package:flutter_wetterwolke/data/configurationkey.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfigurationPage extends StatefulWidget {
@@ -73,7 +74,7 @@ class ConfigurationState extends State<ConfigurationPage> {
 
   _setSecret(String secret) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("secret", secret);
+    prefs.setString(ConfigurationKey.secret, secret);
     configuration.secret = secret;
   }
 }

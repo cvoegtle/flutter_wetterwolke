@@ -5,11 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_wetterwolke/data/backend.dart';
 import 'package:flutter_wetterwolke/data/configuration.dart';
+import 'package:flutter_wetterwolke/data/configurationkey.dart';
+import 'package:flutter_wetterwolke/data/localstorage.dart';
 import 'package:flutter_wetterwolke/data/locationcalculator.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WeatherDataModel extends ChangeNotifier {
+  String _localConfiguration;
+  
   Set<String> locations = Set();
   Configuration configuration = Configuration([], []);
   final List<WeatherData> _dataSets = [];
@@ -21,14 +25,20 @@ class WeatherDataModel extends ChangeNotifier {
   LocationProvider locationProvider = LocationProvider();
 
   void init() {
-    fetchConfiguration().then((response) {
-      processConfiguration(response);
-    }, onError: (e) {
-      fetchConfigurationError = "onError: " + e.toString();
-      notifyListeners();
-    }).catchError((e) {
-      fetchConfigurationError = "catchError: " + e.toString();
-      notifyListeners();
+    fetchLocalConfiguration().then((jsonConfiguration) {
+      if (jsonConfiguration != null) {
+        processConfigurationString(jsonConfiguration);
+        _localConfiguration = jsonConfiguration;
+      }
+      fetchConfiguration().then((response) {
+        processConfiguration(response);
+      }, onError: (e) {
+        fetchConfigurationError = "onError: " + e.toString();
+        notifyListeners();
+      }).catchError((e) {
+        fetchConfigurationError = "catchError: " + e.toString();
+        notifyListeners();
+      });
     });
   }
 
@@ -59,12 +69,20 @@ class WeatherDataModel extends ChangeNotifier {
   }
 
   processConfiguration(http.Response response) {
-    var body = Utf8Decoder().convert(response.bodyBytes);
-    configuration = readConfiguration(body);
-    SharedPreferences.getInstance()
-        .then((prefs) => addLocalConfiguration(prefs));
+    String jsonConfiguration = Utf8Decoder().convert(response.bodyBytes);
+    if (jsonConfiguration != _localConfiguration) {
+      saveConfigurationAsString(jsonConfiguration);
+      processConfigurationString(jsonConfiguration);
+    }
   }
 
+  void processConfigurationString(String jsonConfiguration) {
+    configuration = readConfiguration(jsonConfiguration);
+    SharedPreferences.getInstance().then((prefs) {
+      addLocalConfiguration(prefs);
+    });
+  }
+  
   addLocalConfiguration(SharedPreferences prefs) {
     ensureInitialConfiguration(prefs, configuration.locations);
     configuration.locations.forEach((location) {
@@ -73,7 +91,7 @@ class WeatherDataModel extends ChangeNotifier {
         locations.add(location.location);
       }
     });
-    configuration.secret = prefs.getString("secret");
+    configuration.secret = prefs.getString(ConfigurationKey.secret);
 
     _initialized = true;
     _fetchWitPermissionCheck();

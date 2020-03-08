@@ -9,19 +9,7 @@ class LocationProvider {
   bool permissionGranted = false;
   var location = new Location();
 
-  void fetchWithPermissionCheckIfEnabled(void Function() proceedProcessing) {
-    location.serviceEnabled().then((enabled){
-      if (enabled) {
-        _fetchWithPermissionCheck(proceedProcessing);
-      } else {
-        _proceedWithoutLocation(proceedProcessing);
-      }
-    }, onError: (_) {
-      _proceedWithoutLocation(proceedProcessing);
-    });
-  }
-
-  void _fetchWithPermissionCheck(void proceedProcessing()) {
+  void fetchWithPermissionCheck(void Function() proceedProcessing) {
     location.requestPermission().then((permissionStatus) {
       this.permissionGranted = permissionStatus == PermissionStatus.GRANTED;
       fetch(proceedProcessing);
@@ -39,7 +27,7 @@ class LocationProvider {
   }
 
   void _fetchIfServiceAvailable(void Function() proceedProcessing) {
-    location.serviceEnabled().then((enabled){
+    location.serviceEnabled().then((enabled) {
       if (enabled) {
         _fetchIfAllowed(proceedProcessing);
       } else {
@@ -49,7 +37,6 @@ class LocationProvider {
       _proceedWithoutLocation(proceedProcessing);
     });
   }
-
 
   _fetchIfAllowed(void Function() proceedProcessing) {
     try {
@@ -68,7 +55,7 @@ class LocationProvider {
     currentPosition = null;
     proceedProcessing();
   }
-  
+
   _updateLocation(LocationData newLocation) {
     if (newLocation != null) {
       currentPosition = Position(newLocation.latitude, newLocation.longitude);

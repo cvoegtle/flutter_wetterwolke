@@ -6,41 +6,70 @@ import 'package:vector_math/vector_math.dart';
 
 class LocationProvider {
   Position currentPosition;
-  bool permissionGranted;
+  bool permissionGranted = false;
   var location = new Location();
 
-  void fetch(void Function() proceedProcessing) {
-    if (permissionGranted) {
-      fetchIfAllowed((proceedProcessing));
-    } else {
-      proceedWithoutLocation(proceedProcessing);
-    }
+  void fetchWithPermissionCheckIfEnabled(void Function() proceedProcessing) {
+    location.serviceEnabled().then((enabled){
+      if (enabled) {
+        _fetchWithPermissionCheck(proceedProcessing);
+      } else {
+        _proceedWithoutLocation(proceedProcessing);
+      }
+    }, onError: (_) {
+      _proceedWithoutLocation(proceedProcessing);
+    });
   }
 
-  void fetchWithPermissionCheck(void Function() proceedProcessing) {
+  void _fetchWithPermissionCheck(void proceedProcessing()) {
     location.requestPermission().then((permissionStatus) {
       this.permissionGranted = permissionStatus == PermissionStatus.GRANTED;
       fetch(proceedProcessing);
     }, onError: (_) {
-      proceedWithoutLocation(proceedProcessing);
+      _proceedWithoutLocation(proceedProcessing);
     });
   }
-  
-  void proceedWithoutLocation(void proceedProcessing()) {
+
+  void fetch(void Function() proceedProcessing) {
+    if (permissionGranted) {
+      _fetchIfServiceAvailable((proceedProcessing));
+    } else {
+      _proceedWithoutLocation(proceedProcessing);
+    }
+  }
+
+  void _fetchIfServiceAvailable(void Function() proceedProcessing) {
+    location.serviceEnabled().then((enabled){
+      if (enabled) {
+        _fetchIfAllowed(proceedProcessing);
+      } else {
+        _proceedWithoutLocation(proceedProcessing);
+      }
+    }, onError: (_) {
+      _proceedWithoutLocation(proceedProcessing);
+    });
+  }
+
+
+  _fetchIfAllowed(void Function() proceedProcessing) {
+    try {
+      location.getLocation().then((locationData) {
+        _updateLocation(locationData);
+        proceedProcessing();
+      }).catchError((_) {
+        proceedProcessing();
+      }).whenComplete(() => proceedProcessing());
+    } catch (ex) {
+      proceedProcessing();
+    }
+  }
+
+  void _proceedWithoutLocation(void Function() proceedProcessing) {
     currentPosition = null;
     proceedProcessing();
   }
-
-  fetchIfAllowed(void Function() proceedProcessing) {
-    location.getLocation().then((locationData) {
-      updateLocation(locationData);
-      proceedProcessing();
-    }).catchError((_) {
-      proceedProcessing();
-    });
-  }
-
-  updateLocation(LocationData newLocation) {
+  
+  _updateLocation(LocationData newLocation) {
     if (newLocation != null) {
       currentPosition = Position(newLocation.latitude, newLocation.longitude);
     }

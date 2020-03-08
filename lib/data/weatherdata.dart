@@ -49,7 +49,7 @@ class WeatherDataModel extends ChangeNotifier {
   }
 
   void _fetchWitPermissionCheck() {
-    locationProvider.fetchWithPermissionCheck(proceedWithFetchData);
+    locationProvider.fetchWithPermissionCheckIfEnabled(proceedWithFetchData);
   }
 
   void proceedWithFetchData() {

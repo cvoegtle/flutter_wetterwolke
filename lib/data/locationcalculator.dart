@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_wetterwolke/data/weatherdata.dart';
 import 'package:location/location.dart';
+import 'package:location_permissions/location_permissions.dart' as permissions;
 import 'package:vector_math/vector_math.dart';
 
 class LocationProvider {
@@ -10,8 +11,8 @@ class LocationProvider {
   var location = new Location();
 
   void fetchWithPermissionCheck(void Function() proceedProcessing) {
-    location.requestPermission().then((permissionStatus) {
-      this.permissionGranted = permissionStatus == PermissionStatus.GRANTED;
+    permissions.LocationPermissions().requestPermissions().then((permissionStatus)  {
+      this.permissionGranted = permissionStatus == permissions.PermissionStatus.granted;
       fetch(proceedProcessing);
     }, onError: (_) {
       _proceedWithoutLocation(proceedProcessing);

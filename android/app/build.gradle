@@ -26,7 +26,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -48,7 +48,7 @@ android {
     defaultConfig {
         applicationId "org.voegtle.flutter_wetterwolke"
         minSdkVersion 26
-        targetSdkVersion 29
+        targetSdkVersion 30
         signingConfig signingConfigs.cvoegtle
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -58,6 +58,7 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.cvoegtle
+            shrinkResources false
             minifyEnabled false
         }
     }
@@ -68,7 +69,7 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.1.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.1.1'

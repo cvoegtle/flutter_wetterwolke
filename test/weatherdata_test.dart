@@ -27,6 +27,7 @@ void main() {
         1019.032,
         722,
         4.8,
+        20.7,
         null,
         null,
         false,
@@ -35,6 +36,7 @@ void main() {
     expect(json['id'], data.id);
     expect(json['barometer'], data.barometer);
     expect(json['unbekannt'], null);
+    expect(json['wind'], data.wind);
   });
 
   test('weatherdata deserialisation', () {

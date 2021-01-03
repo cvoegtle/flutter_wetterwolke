@@ -116,6 +116,10 @@ class WeatherDetails extends StatelessWidget {
       Text(humidityText()),
     ];
 
+    if (weatherData.wind != null && weatherData.wind != 0) {
+      rows.add(Text("Wind: ${formatter.format(weatherData.wind)}km/h"));
+    }
+
     if (weatherData.barometer != null) {
       rows.add(
           Text("Luftdruck: ${formatter.format(weatherData.barometer)}hPa"));

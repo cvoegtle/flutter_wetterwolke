@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class WeatherDataModel extends ChangeNotifier {
   String _localConfiguration;
-  
+
   Set<String> locations = Set();
   Configuration configuration = Configuration([], []);
   final List<WeatherData> _dataSets = [];
@@ -82,7 +82,7 @@ class WeatherDataModel extends ChangeNotifier {
       addLocalConfiguration(prefs);
     });
   }
-  
+
   addLocalConfiguration(SharedPreferences prefs) {
     ensureInitialConfiguration(prefs, configuration.locations);
     configuration.locations.forEach((location) {
@@ -140,6 +140,7 @@ class WeatherData implements Comparable<WeatherData> {
   final num barometer;
   final int solarradiation;
   final num UV;
+  final num wind;
   final num rain;
   final num rainToday;
   final bool raining;
@@ -161,6 +162,7 @@ class WeatherData implements Comparable<WeatherData> {
       this.barometer,
       this.solarradiation,
       this.UV,
+      this.wind,
       this.rain,
       this.rainToday,
       this.raining,
@@ -181,6 +183,7 @@ class WeatherData implements Comparable<WeatherData> {
         barometer = json['barometer'],
         solarradiation = json['solarradiation'],
         UV = json['UV'],
+        wind = json['wind'],
         rain = json['rain'],
         rainToday = json['rain_today'],
         raining = json['raining'],
@@ -201,6 +204,7 @@ class WeatherData implements Comparable<WeatherData> {
         'barometer': barometer,
         'solarradiation': solarradiation,
         'UV': UV,
+        'wind': wind,
         'rain': rain,
         'rain_today': rainToday,
         'raining': raining,

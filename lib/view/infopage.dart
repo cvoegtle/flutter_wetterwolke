@@ -57,7 +57,7 @@ class InfoPage extends StatelessWidget {
                               "https://github.com/cvoegtle/flutter_wetterwolke/blob/master/HELP.md")),
                   Divider(),
                   Caption("Versions Information"),
-                  Text("Version 1.16.26-26 vom 3.1.2021 ")
+                  Text("Version 1.17.27-27 vom 27.1.2021 ")
                 ]))));
   }
 }

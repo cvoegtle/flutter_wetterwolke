@@ -30,6 +30,8 @@ void main() {
         20.7,
         null,
         null,
+        null,
+        null,
         false,
         'http://wetterstationen.meteomedia.de/?station=104300&wahl=vorhersage');
     var json = data.toJson();

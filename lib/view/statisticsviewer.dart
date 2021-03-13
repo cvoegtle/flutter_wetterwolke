@@ -29,6 +29,9 @@ class StatisticsViewer extends StatelessWidget {
     if (this.statistics.containsSolarInformation()) {
       widgets.add(columnSolarSum("∑ Sonne", range));
       widgets.add(columnSolarMax(range));
+    } else if (this.statistics.containsPowerInformation()) {
+      widgets.add(columnSolarSum("∑ KWh", range));
+      widgets.add(columnPowerMax(range));
     } else if (this.statistics.containsCollectedEnergy()) {
       widgets.add(columnSolarSum("∑ kWh", range));
     }
@@ -92,6 +95,16 @@ class StatisticsViewer extends StatelessWidget {
     for (StatisticsSet set in statistics.range) {
       cells.add(StatisticsCell(
           columnStyle, format(set.solarRadiationMax, postfix: "W/m²")));
+    }
+    return new StatisticsColumn(cells);
+  }
+
+  Widget columnPowerMax(List<StatisticsSet> range) {
+    List<Widget> cells = [];
+    cells.add(StatisticsCell(firstColumnStyle, "Maximum"));
+    for (StatisticsSet set in statistics.range) {
+      cells.add(StatisticsCell(
+          columnStyle, format(set.solarRadiationMax, postfix: "W")));
     }
     return new StatisticsColumn(cells);
   }

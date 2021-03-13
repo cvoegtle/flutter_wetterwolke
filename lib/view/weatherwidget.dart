@@ -133,6 +133,14 @@ class WeatherDetails extends StatelessWidget {
       rows.add(Text("UV Index: ${formatter.format(weatherData.UV)}"));
     }
 
+    if (weatherData.powerProduction != null && weatherData.powerProduction > 2.0) {
+      rows.add(Text("Produktion: ${formatter.format(weatherData.powerProduction)}W"));
+    }
+
+    if (weatherData.powerFeed != null && weatherData.powerFeed > 5.0) {
+      rows.add(Text("Einspeisung: ${formatter.format(weatherData.powerFeed)}W"));
+    }
+
     if (weatherData.rain != null) {
       rows.add(Text("Regen 1h: ${formatter.format(weatherData.rain)}l/m²"));
     }

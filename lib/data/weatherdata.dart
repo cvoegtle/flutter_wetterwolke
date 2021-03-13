@@ -140,6 +140,8 @@ class WeatherData implements Comparable<WeatherData> {
   final num barometer;
   final int solarradiation;
   final num UV;
+  final num powerProduction;
+  final num powerFeed;
   final num wind;
   final num rain;
   final num rainToday;
@@ -162,6 +164,8 @@ class WeatherData implements Comparable<WeatherData> {
       this.barometer,
       this.solarradiation,
       this.UV,
+      this.powerProduction,
+      this.powerFeed,
       this.wind,
       this.rain,
       this.rainToday,
@@ -183,6 +187,8 @@ class WeatherData implements Comparable<WeatherData> {
         barometer = json['barometer'],
         solarradiation = json['solarradiation'],
         UV = json['UV'],
+        powerProduction = json['powerProduction'],
+        powerFeed = json['powerFeed'],
         wind = json['wind'],
         rain = json['rain'],
         rainToday = json['rain_today'],
@@ -204,6 +210,8 @@ class WeatherData implements Comparable<WeatherData> {
         'barometer': barometer,
         'solarradiation': solarradiation,
         'UV': UV,
+        'powerProduction': powerProduction,
+        'powerFeed': powerFeed,
         'wind': wind,
         'rain': rain,
         'rain_today': rainToday,

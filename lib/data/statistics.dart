@@ -32,19 +32,22 @@ class StatisticsModel extends ChangeNotifier {
 
 class Statistics {
   final String id;
+  final String kind;
   final List<StatisticsSet> range;
-
-  Statistics(this.id, this.range);
 
   Statistics.fromJson(Map<String, dynamic> json)
       : id = json['id'],
+        kind = json['kind'],
         range = convertRangeFromJson(json['stats']);
-  
+
   bool containsSolarInformation() {
-    var statisticSetWithSolar = range.firstWhere((statisticSet) => statisticSet.containsSolarInformation(), orElse: () => null);
-    return statisticSetWithSolar != null;
+    return kind == 'withSolarRadiation';
   }
-  
+
+  bool containsPowerInformation() {
+    return kind == 'withSolarPower';
+  }
+
   bool containsCollectedEnergy() {
     var statisticSetWithSolar = range.firstWhere((statisticSet) => statisticSet.containsCollectedEnergy(), orElse: () => null);
     return statisticSetWithSolar != null;

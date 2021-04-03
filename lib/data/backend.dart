@@ -2,17 +2,20 @@ import 'package:http/http.dart' as http;
 
 const String _base_url = 'https://wettercentral.appspot.com//weatherstation/read?build=flutter';
 Future<http.Response> fetchData(Set<String> locations, {String additional = ''}) {
-  return http.get('$_base_url&locations=${setToString(locations, ',')}$additional');
+  var dataUrl = Uri.parse('$_base_url&locations=${setToString(locations, ',')}$additional');
+  return http.get(dataUrl);
 }
 
 const String _base_stats_url = 'https://wettercentral.appspot.com//weatherstation/read?build=flutter&type=stats';
 Future<http.Response> fetchStats(Set<String> locations, {String additional = ''}) {
-  return http.get('$_base_stats_url&locations=${setToString(locations, ',')}$additional');
+  var statsUrl = Uri.parse('$_base_stats_url&locations=${setToString(locations, ',')}$additional');
+  return http.get(statsUrl);
 }
 
 const String configuration_url = 'https://www.voegtle.org/~christian/ww/app/configuration.json';
 Future<http.Response> fetchConfiguration() {
-  return http.get(configuration_url);
+  var url = Uri.parse(configuration_url);
+  return http.get(url);
 }
 
 

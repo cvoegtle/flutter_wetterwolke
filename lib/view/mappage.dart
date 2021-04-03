@@ -33,7 +33,6 @@ class MapPage extends StatelessWidget {
             new TileLayerOptions(
               urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
               subdomains: ['a', 'b', 'c'],
-              tileProvider: CachedNetworkTileProvider(),
             ),
             new MarkerLayerOptions(
               markers: createMarkerForLocations(context),

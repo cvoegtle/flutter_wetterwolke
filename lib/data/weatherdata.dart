@@ -48,7 +48,7 @@ class WeatherDataModel extends ChangeNotifier {
     }
   }
 
-  void _fetchWitPermissionCheck() {
+  void _fetchLocationWithPermissionCheck() {
     locationProvider.fetchWithPermissionCheck(proceedWithFetchData);
   }
 
@@ -94,7 +94,7 @@ class WeatherDataModel extends ChangeNotifier {
     configuration.secret = prefs.getString(ConfigurationKey.secret);
 
     _initialized = true;
-    _fetchWitPermissionCheck();
+    _fetchLocationWithPermissionCheck();
   }
 
   void reinitialize() {

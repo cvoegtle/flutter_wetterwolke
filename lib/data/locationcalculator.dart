@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_wetterwolke/data/weatherdata.dart';
 import 'package:location/location.dart';
+import 'package:location_permissions/src/permission_enums.dart';
 import 'package:location_permissions/location_permissions.dart' as permissions;
 import 'package:vector_math/vector_math.dart';
 
@@ -11,12 +12,20 @@ class LocationProvider {
   var location = new Location();
 
   void fetchWithPermissionCheck(void Function() proceedProcessing) {
-    permissions.LocationPermissions().requestPermissions().then((permissionStatus)  {
-      this.permissionGranted = permissionStatus == permissions.PermissionStatus.granted;
-      fetch(proceedProcessing);
-    }, onError: (_) {
-      _proceedWithoutLocation(proceedProcessing);
-    });
+    try {
+      permissions.LocationPermissions().requestPermissions(permissionLevel: LocationPermissionLevel.locationWhenInUse).then((
+          permissionStatus) {
+        this.permissionGranted =
+            permissionStatus == permissions.PermissionStatus.granted;
+        fetch(proceedProcessing);
+      }, onError: (_) {
+        _proceedWithoutLocation(proceedProcessing);
+      }).catchError((_) {
+        _proceedWithoutLocation(proceedProcessing);
+      });
+    } catch (e) {
+      print("Exception on permission check: " + e);
+    }
   }
 
   void fetch(void Function() proceedProcessing) {
@@ -27,29 +36,17 @@ class LocationProvider {
     }
   }
 
-  void _fetchIfServiceAvailable(void Function() proceedProcessing) {
-    location.serviceEnabled().then((enabled) {
-      if (enabled) {
-        _fetchIfAllowed(proceedProcessing);
-      } else {
-        _proceedWithoutLocation(proceedProcessing);
+  void _fetchIfServiceAvailable(void Function() proceedProcessing) async {
+    var serviceAvailable = await location.serviceEnabled();
+    if (serviceAvailable) {
+      serviceAvailable = await location.requestService();
+      if (serviceAvailable) {
+        var currentLocation = await location.getLocation();
+        _updateLocation(currentLocation);
       }
-    }, onError: (_) {
-      _proceedWithoutLocation(proceedProcessing);
-    });
-  }
-
-  _fetchIfAllowed(void Function() proceedProcessing) {
-    try {
-      location.getLocation().then((locationData) {
-        _updateLocation(locationData);
-        proceedProcessing();
-      }).catchError((_) {
-        proceedProcessing();
-      }).whenComplete(() => proceedProcessing());
-    } catch (ex) {
-      proceedProcessing();
     }
+
+    proceedProcessing();
   }
 
   void _proceedWithoutLocation(void Function() proceedProcessing) {

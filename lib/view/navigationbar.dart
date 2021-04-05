@@ -25,7 +25,7 @@ class NavigationBar extends StatelessWidget {
           ButtonBar(
             children: <Widget>[
               NavigationButton(
-                icon: Icon(Icons.cloud_download),
+                icon: Icon(Icons.refresh_sharp),
                 onPressed: () {
                   Scaffold.of(context).showSnackBar(UpdateDataSnackBar());
                   this.weatherData.fetch();

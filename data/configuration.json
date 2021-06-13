@@ -17,20 +17,20 @@
       "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=2&oid=1780492499&format=image"
     },
     {
-      "description": "Sommer 2019",
-      "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=1&oid=1460370869&format=image"
+      "description": "Sommer 2021",
+      "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=1&oid=971600707&format=image"
     },
     {
-      "description": "Sommer 2018",
-      "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=1&oid=1617791090&format=image"
+      "description": "Sommer 2020",
+      "url": "https://docs.google.com/spreadsheets/d/e/2PACX-1vSZgzsx-WhN_tdsJEoAfvrXR8bPxSeHOu1V-o6989TCtCNUaWMKgJVWNpZb2BYrxQxcSKRC-1p31oge/pubchart?oid=493769748&format=image"
+    },
+    {
+      "description": "Winter 2020/21",
+      "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=1&oid=1463953487&format=image"
     },
     {
       "description": "Winter 2019/20",
       "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=1&oid=951641867&format=image"
-    },
-    {
-      "description": "Winter 2018/19",
-      "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=1&oid=2026888598&format=image"
     },
     {
       "description": "Regen",
@@ -120,6 +120,10 @@
           "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=2&oid=75598496&format=image"
         },
         {
+          "description": "Luftdruck",
+          "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=2&oid=1474051069&format=image"
+        },
+        {
           "description": "30 Tage",
           "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=1&oid=1610295076&format=image"
         },
@@ -128,8 +132,8 @@
           "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=2&oid=322622774&format=image"
         },
         {
-          "description": "Solarproduktion",
-          "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=2&oid=255192281&format=image"
+          "description": "Stromproduktion",
+          "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=2&oid=26392282&format=image"
         },
         {
           "description": "Tagesproduktion",
@@ -180,6 +184,10 @@
         {
           "description": "7 Tage",
           "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=2&oid=2090578754&format=image"
+        },
+        {
+          "description": "Wind",
+          "url": "https://wetterimages.appspot.com/weatherstation/image?sheet=2&oid=1951689780&format=image"
         },
         {
           "description": "Luftfeuchtigkeit",

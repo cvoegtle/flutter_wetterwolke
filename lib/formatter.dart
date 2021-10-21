@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 
-final defaultFormatter = NumberFormat("#,###.#");
+const String DEFAULT_LOCALE = "de_DE";
+final defaultFormatter = NumberFormat("#,###.#", DEFAULT_LOCALE);
 
 String format(num value, {String prefix = "", String postfix = ""}) {
   String formattedNumber = "";

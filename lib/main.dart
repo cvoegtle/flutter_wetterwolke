@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wetterwolke/data/weatherdata.dart';
 import 'package:flutter_wetterwolke/view/weatherwidget.dart';
+import 'package:flutter_wetterwolke/formatter.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
 import 'view/navigationbar.dart';
 
 void main() {
-  initializeDateFormatting("de_DE", null).then((_) => runWetterWolke());
+  initializeDateFormatting(DEFAULT_LOCALE, null).then((_) => runWetterWolke());
 }
 
 void runWetterWolke() {

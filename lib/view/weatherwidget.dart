@@ -105,7 +105,6 @@ class WeatherTitle extends StatelessWidget {
 
 class WeatherDetails extends StatelessWidget {
   final WeatherData weatherData;
-  NumberFormat formatter = NumberFormat("#,###.#");
 
   WeatherDetails(this.weatherData);
 
@@ -117,12 +116,12 @@ class WeatherDetails extends StatelessWidget {
     ];
 
     if (weatherData.wind != null && weatherData.wind != 0) {
-      rows.add(Text("Wind: ${formatter.format(weatherData.wind)}km/h"));
+      rows.add(Text("Wind: ${format(weatherData.wind, postfix: "km/h")}"));
     }
 
     if (weatherData.barometer != null) {
       rows.add(
-          Text("Luftdruck: ${formatter.format(weatherData.barometer)}hPa"));
+          Text("Luftdruck: ${format(weatherData.barometer, postfix: "hPa")}"));
     }
 
     if (weatherData.solarradiation != null && weatherData.solarradiation != 0) {
@@ -130,24 +129,24 @@ class WeatherDetails extends StatelessWidget {
     }
 
     if (weatherData.UV != null && weatherData.UV != 0) {
-      rows.add(Text("UV Index: ${formatter.format(weatherData.UV)}"));
+      rows.add(Text("UV Index: ${format(weatherData.UV)}"));
     }
 
     if (weatherData.powerProduction != null && weatherData.powerProduction > 2.0) {
-      rows.add(Text("Produktion: ${formatter.format(weatherData.powerProduction)}W"));
+      rows.add(Text("Produktion: ${format(weatherData.powerProduction, postfix: "W")}"));
     }
 
     if (weatherData.powerFeed != null && weatherData.powerFeed > 5.0) {
-      rows.add(Text("Einspeisung: ${formatter.format(weatherData.powerFeed)}W"));
+      rows.add(Text("Einspeisung: ${format(weatherData.powerFeed, postfix: "W")}"));
     }
 
     if (weatherData.rain != null) {
-      rows.add(Text("Regen 1h: ${formatter.format(weatherData.rain)}l/m²"));
+      rows.add(Text("Regen 1h: ${format(weatherData.rain, postfix: "l/m²")}"));
     }
 
     if (weatherData.rainToday != null) {
       rows.add(
-          Text("Regen heute: ${formatter.format(weatherData.rainToday)}l/m²"));
+          Text("Regen heute: ${format(weatherData.rainToday, postfix: "l/m²")}"));
     }
 
     return Container(
@@ -166,10 +165,10 @@ class WeatherDetails extends StatelessWidget {
   String temperatureText() {
     String insideTemperatureText =
         optional(weatherData.insideTemperature, "°C");
-    return "Temperatur: ${formatter.format(weatherData.temperature)}°C$insideTemperatureText";
+    return "Temperatur: ${format(weatherData.temperature, postfix: "°C")}$insideTemperatureText";
   }
 
   String optional(num value, String postfix) {
-    return value != null ? " / $value$postfix" : "";
+    return value != null ? " / ${format(value, postfix: postfix)}" : "";
   }
 }
